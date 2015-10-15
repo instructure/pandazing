@@ -1,0 +1,6 @@
+app:
+  build: .
+  volumes:
+    - .:/usr/src/app
+  environment:
+    VIRTUAL_HOST: tanks.docker

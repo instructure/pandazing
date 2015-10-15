@@ -1,0 +1,53 @@
+.root {
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  background-image: url('../assets/tankbrigade.png');
+}
+
+.empty {
+  background-position: -6em -5em;
+}
+
+.wall {
+  background-position: -11em -2em;
+}
+
+.tank-1-north {
+  background-position: -15em -1em;
+}
+.tank-1-east {
+  background-position: -16em -3em;
+}
+.tank-1-south {
+  background-position: -16em -2em;
+}
+.tank-1-west {
+  background-position: -17em -3em;
+}
+
+.tank-2-north {
+  background-position: -16em -10em;
+}
+.tank-2-east {
+  background-position: -22em -3em;
+}
+.tank-2-south {
+  background-position: -16em -11em;
+}
+.tank-2-west {
+  background-position: -21em -3em;
+}
+
+.bullet-north {
+  background-position: -4em -1em;
+}
+.bullet-east {
+  background-position: -6em -1em;
+}
+.bullet-south {
+  background-position: -7em -1em;
+}
+.bullet-west {
+  background-position: -5em -1em;
+}

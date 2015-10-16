@@ -13,7 +13,8 @@ export default class Entity {
     this.alive = false;
   }
 
-  tick(game) {
+  tick(game, cb) {
+    cb();
   }
 
   damage(weapon) {

@@ -5,9 +5,9 @@ class Explosion extends Entity {
     return 'explosion';
   }
 
-  tick(game) {
-    super.tick(game);
+  tick(game, cb) {
     this.destroy();
+    super.tick(game, cb);
   }
 }
 
@@ -16,12 +16,12 @@ export default class Bullet extends Entity {
     return `bullet-${this.facing}`;
   }
 
-  tick(game) {
-    super.tick(game);
+  tick(game, cb) {
     var vector = Entity.vector(this.facing);
     var newPos = {x: this.x + vector.x, y: this.y + vector.y};
     Object.assign(this, newPos);
     this.check(game);
+    super.tick(game, cb);
   }
 
   check(game) {

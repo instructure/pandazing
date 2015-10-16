@@ -66,9 +66,11 @@ export default class Player extends Entity {
     this.worker = new PlayerWorker(source);
   }
 
-  tick(game) {
-    super.tick(game);
-    this.worker.takeTurn(null, turn => this.evaluateMove(game, turn));
+  tick(game, cb) {
+    this.worker.takeTurn(null, turn => {
+      this.evaluateMove(game, turn);
+      super.tick(game, cb);
+    });
   }
 
   destroy() {

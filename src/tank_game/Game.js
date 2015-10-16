@@ -1,4 +1,5 @@
 import _ from 'underscore';
+import async from 'async';
 
 import Player from './Player';
 
@@ -61,20 +62,24 @@ export default class Game {
   }
 
   tick() {
-    this.entities.forEach(e => e.tick(this));
-    var [alive, dead] = _.partition(this.entities, e => e.alive);
-    this.entities = alive;
-    dead.forEach(e => e.destroy());
+    async.eachSeries(this.entities, (e, cb) => {
+      e.tick(this, cb);
+    }, _err => {
+      // TODO: err
+      var [alive, dead] = _.partition(this.entities, e => e.alive);
+      this.entities = alive;
+      dead.forEach(e => e.destroy());
 
-    var players = this.entities.filter(e => e instanceof Player);
-    if (players.length < 2) {
-      console.log('winner: ', players[0]);
-      clearInterval(this.timer);
-    }
+      var players = this.entities.filter(e => e instanceof Player);
+      if (players.length < 2) {
+        console.log('winner: ', players[0]);
+        clearInterval(this.timer);
+      }
 
-    if (this.onupdate) {
-      this.onupdate(this);
-    }
+      if (this.onupdate) {
+        this.onupdate(this);
+      }
+    });
   }
 
   abort() {

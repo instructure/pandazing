@@ -29,9 +29,9 @@ config.postcss = [
 config.plugins = config.plugins.concat([
   new webpack.optimize.DedupePlugin(),
   new webpack.optimize.UglifyJsPlugin({
-    mangle: {
-      except: ['require', 'export', '$super']
-    },
+    // the code players will write depends on some class and function names,
+    // so no mangling for this project
+    mangle: false,
     compress: {
       warnings: false,
       sequences: true,
@@ -41,7 +41,8 @@ config.plugins = config.plugins.concat([
       unused: true,
       if_return: true,
       join_vars: true,
-      drop_console: true
+      // we want to keep console logging, since this game involves debugging js
+      drop_console: false
     }
   }),
   new CompressionPlugin({

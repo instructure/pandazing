@@ -4,15 +4,6 @@ import Sprite from './Sprite.jsx';
 import Styles from './GameViz.css';
 
 export default class GameViz extends React.Component {
-  componentDidMount() {
-    // HAX
-    this.timer = setInterval(this.forceUpdate.bind(this), 500);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
-
   render() {
     var styles = {
       height: this.props.game.map.length + 'em',

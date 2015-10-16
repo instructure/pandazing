@@ -8,9 +8,9 @@ import mixin from 'react-mixin';
 
 import Styles from './App.css';
 
-// HAX
 import Game from '../tank_game/Game';
-window.game = new Game();
+
+// HAX
 var template =
 `
 function takeTurn(map) {
@@ -48,6 +48,9 @@ export default class App extends React.Component {
   }
 
   componentWillMount() {
+    this.game = new Game();
+    this.game.onupdate = game => this.setState({game});
+    this.setState({game: this.game});
     var authData = this.props.store.getAuth();
     if (authData) {
       this.loggedIn(authData);
@@ -56,7 +59,7 @@ export default class App extends React.Component {
   }
 
   playSolo() {
-    window.game.run([{source: this.state.currentAi.source}]);
+    this.game.run([{source: this.state.currentAi.source}]);
   }
 
   playMulti() {
@@ -65,15 +68,13 @@ export default class App extends React.Component {
       var [uid, ai] = name.split('/');
       return this.state.allAis[uid][ai];
     };
-    var name = this.refs.player1Ai.getDOMNode().value;
-    if (name !== 'none') {
-      players.push({source: getAi(name).source });
-    }
-    name = this.refs.player2Ai.getDOMNode().value;
-    if (name !== 'none') {
-      players.push({source: getAi(name).source });
-    }
-    window.game.run(players);
+    [1, 2, 3, 4].forEach(i => {
+      var name = this.refs[`player${i}Ai`].getDOMNode().value;
+      if (name !== 'none') {
+        players.push({source: getAi(name).source });
+      }
+    });
+    this.game.run(players);
   }
 
   login() {
@@ -161,7 +162,7 @@ export default class App extends React.Component {
       return (
         <div className={Styles.root}>
           <div className={Styles.main}>
-            <GameViz game={window.game}/>
+            <GameViz game={this.state.game}/>
             <div className={Styles.editing}>
               <div>
                 { this.state.currentAi &&
@@ -177,10 +178,22 @@ export default class App extends React.Component {
                   <option value='none'>None</option>
                   { allAis }
                 </select>
+                <br/>
                 <select ref='player2Ai'>
                   <option value='none'>None</option>
                   { allAis }
                 </select>
+                <br/>
+                <select ref='player3Ai'>
+                  <option value='none'>None</option>
+                  { allAis }
+                </select>
+                <br/>
+                <select ref='player4Ai'>
+                  <option value='none'>None</option>
+                  { allAis }
+                </select>
+                <br/>
                 <button onClick={this.playMulti}>Battle</button>
               </div>
             </div>

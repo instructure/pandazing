@@ -5,7 +5,7 @@ import Player from './Player';
 var map1 = [
 '_________WW__WW_________',
 '_WWWWW____________WWWWW_',
-'_W___W____________W___W_',
+'_W___W______S_____W___W_',
 '_W____________________W_',
 '_W___W____________W___W_',
 '_WW_WW___WW__WW___WW_WW_',
@@ -16,11 +16,11 @@ var map1 = [
 '_WW_WW____________WW_WW_',
 '_W___W____________W___W_',
 '_W____________________W_',
-'_W___W____________W___W_',
+'_W___W_____S______W___W_',
 '_WWWWW____________WWWWW_',
 '_________WW__WW_________'];
 
-map1 = [
+var map2 = [
 'S___S',
 '___S_',
 '__W__',
@@ -39,7 +39,7 @@ export default class Game {
     }
     this.entities.forEach(e => e.destroy());
     this.entities = [];
-    this.map = this.parseMap(map1);
+    this.map = this.parseMap(map2);
   }
 
   run(players, cb) {
@@ -70,6 +70,10 @@ export default class Game {
     if (players.length < 2) {
       console.log('winner: ', players[0]);
       clearInterval(this.timer);
+    }
+
+    if (this.onupdate) {
+      this.onupdate(this);
     }
   }
 

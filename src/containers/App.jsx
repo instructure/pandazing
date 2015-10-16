@@ -13,7 +13,7 @@ import Styles from './App.css';
 import Game from '../tank_game/Game';
 
 import {
-  localLogin, loginUser, logoutUser, selectEditingAI, editAi
+  localLogin, loginUser, logoutUser, newAi, selectEditingAi, editAi
 } from '../store/actions';
 
 class App extends React.Component {
@@ -148,12 +148,15 @@ class App extends React.Component {
               onLogin={() => dispatch(loginUser())}
               onLogout={() => dispatch(logoutUser())}
               user={this.props.user}/>
-            { this.props.user && <button onClick={this.newProgram}>New Program</button> }
+            { this.props.user &&
+              <button onClick={() => dispatch(newAi(user.uid, 'Untitled', Game.aiTemplate()))}>
+                New Program
+              </button> }
             <br/>
             { ais.userAis.length > 0 &&
                 <select size={5}
                         value={ais.editingAi && ais.editingAi.name}
-                        onChange={(event) => dispatch(selectEditingAI(event.target.value))}>
+                        onChange={(event) => dispatch(selectEditingAi(event.target.value))}>
                   { ais.userAis.map(ai => <option key={ai.name} value={ai.name}>{ai.name}</option>) }
                 </select>
             }

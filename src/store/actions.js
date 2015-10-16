@@ -79,7 +79,7 @@ export function logoutUser() {
   };
 }
 
-export function selectEditingAI(name) {
+export function selectEditingAi(name) {
   return { type: SELECT_EDITING_AI, name };
 }
 
@@ -88,5 +88,12 @@ export function editAi(uid, editingAi, newSource) {
     firebase.child('ais').child(uid).child(editingAi).update({
       source: newSource
     });
+  };
+}
+
+export function newAi(uid, name, source) {
+  return dispatch => {
+    firebase.child('ais').child(uid).child(name).set({name, source});
+    dispatch(selectEditingAi(name));
   };
 }

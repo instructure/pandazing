@@ -20,14 +20,14 @@ export default class Editor extends React.Component {
 
     return (
       <div>
-        <input type='text'
+        Bot Name: <input type='text'
           onChange={this.rename}
           disabled={disabled}
           value={program && program.name} />
         <Ace
           mode="javascript"
           theme="chrome"
-          height="15em"
+          height="25em"
           width="60em"
           readOnly={disabled}
           value={program && program.source}

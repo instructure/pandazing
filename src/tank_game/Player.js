@@ -203,6 +203,7 @@ export default class Player extends Entity {
       break;
     default:
       // TODO: display failure message
+      game.addMessage(`Player ${this.playerId} took a wrong move and vanishes`);
       this.destroy(game);
       break;
     }

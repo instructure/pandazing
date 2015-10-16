@@ -2,10 +2,23 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  margin: 1em;
+}
+
+.editing > div {
+  margin: 1em;
 }
 
 .editing {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+}
+
+.sidebar {
+  margin: 1em;
+}
+
+.sidebar img {
+  padding-right: 1em;
 }

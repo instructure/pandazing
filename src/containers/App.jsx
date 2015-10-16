@@ -94,29 +94,41 @@ class App extends React.Component {
             <GameViz game={this.state.game}/>
             <div className={Styles.editing}>
               <div>
+                <button disabled={!user} onClick={() =>
+                    dispatch(newAi(user.uid, user.handle, 'Untitled', Game.aiTemplate()))}>
+                  New Bot
+                </button>
+                <br/>
+                <select size={10}
+                        value={ais.editingAi && ais.editingAi}
+                        onChange={(event) => dispatch(selectEditingAi(event.target.value))}>
+                  { ais.userAis.map(ai => <option key={ai.name} value={ai.name}>{ai.name}</option>) }
+                </select>
+              </div>
+              <div>
                 <Editor program={editingAi}
                   onRename={(newName) => dispatch(renameAi(user.uid, editingAi.name, newName))}
                   onChange={(newSource) => dispatch(editAi(user.uid, editingAi.name, newSource))} />
-                <button disabled={!editingAi} onClick={this.playSolo}>Play Solo</button>
+                <button disabled={!editingAi} onClick={this.playSolo}>Play Debug Game</button>
               </div>
               <div>
-                <p>Multiplayer</p>
-                <select ref='player1Ai'>
+                <p>Play Against Other Bots</p>
+                1: <select ref='player1Ai'>
                   <option value='none'>None</option>
                   { allAis }
                 </select>
                 <br/>
-                <select ref='player2Ai'>
+                2: <select ref='player2Ai'>
                   <option value='none'>None</option>
                   { allAis }
                 </select>
                 <br/>
-                <select ref='player3Ai'>
+                3: <select ref='player3Ai'>
                   <option value='none'>None</option>
                   { allAis }
                 </select>
                 <br/>
-                <select ref='player4Ai'>
+                4: <select ref='player4Ai'>
                   <option value='none'>None</option>
                   { allAis }
                 </select>
@@ -130,19 +142,6 @@ class App extends React.Component {
               onLogin={() => dispatch(loginUser())}
               onLogout={() => dispatch(logoutUser())}
               user={this.props.user}/>
-            { this.props.user &&
-              <button onClick={() =>
-                  dispatch(newAi(user.uid, user.handle, 'Untitled', Game.aiTemplate()))}>
-                New Program
-              </button> }
-            <br/>
-            { ais.userAis.length > 0 &&
-                <select size={5}
-                        value={ais.editingAi && ais.editingAi}
-                        onChange={(event) => dispatch(selectEditingAi(event.target.value))}>
-                  { ais.userAis.map(ai => <option key={ai.name} value={ai.name}>{ai.name}</option>) }
-                </select>
-            }
           </div>
         </div>
       );

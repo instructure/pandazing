@@ -36,6 +36,7 @@ export default class Game {
     }
     this.entities.forEach(e => e.destroy(this));
     this.entities = [];
+    this.messages = [];
     this.map = this.parseMap(map1);
   }
 
@@ -123,6 +124,10 @@ export default class Game {
       case 'S': return { type: 'empty', sprite: 'empty', spawn: true };
       default: throw `invalid map character: ${cell}`;
     }
+  }
+
+  addMessage(message) {
+    this.messages.push(message);
   }
 
   static dummyAi() {

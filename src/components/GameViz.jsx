@@ -22,6 +22,11 @@ export default class GameViz extends React.Component {
           <Sprite key={e._id} x={e.x} y={e.y} sprite={e.sprite} />
         )
       }
+      {
+        this.props.game.messages.map(m =>
+          <p className={Styles.message}>{m}</p>
+        )
+      }
       </div>
     );
   }

@@ -7,3 +7,12 @@
   border-right: 1px solid #757575;
   border-bottom: 1px solid #757575;
 }
+
+.message {
+  position: relative;
+  font-size: 0.3em;
+  color: white;
+  margin: 0;
+  padding: 0.3em;
+  text-shadow: 1px 1px #000;
+}

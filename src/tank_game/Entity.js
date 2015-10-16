@@ -21,6 +21,17 @@ export default class Entity {
     // by default damage does nothing
   }
 
+  // serialization to send to the player's code
+  serialize() {
+    return {
+      x: this.x,
+      y: this.y,
+      facing: this.facing,
+      _id: this._id,
+      type: this.constructor.name
+    };
+  }
+
   static vector(facing) {
     switch(facing) {
       case 'north': return {x: 0, y: -1};

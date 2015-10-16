@@ -9,8 +9,8 @@ import { Provider } from 'react-redux';
 import reducer from './store/reducers';
 
 let store = applyMiddleware(
-  thunkMiddleware,
-  createLogger()
+  thunkMiddleware
+  // createLogger()
 )(createStore)(reducer);
 
 render(

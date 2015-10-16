@@ -3,7 +3,7 @@ import Bullet from './Bullet';
 
 var template = `
 onmessage = function(msg) {
-  takeTurn(msg.data);
+  takeTurn.apply(this, msg.data);
 }
 
 function moveForward() {
@@ -25,6 +25,12 @@ function doNothing() {
   postMessage({turn: 'nothing'});
 }
 
+console = {
+  log: function() {
+    postMessage({log: Array.prototype.slice.apply(arguments)});
+  }
+}
+
 `;
 
 // This isn't totally safe from people messing with things... see the `jailed`
@@ -38,11 +44,16 @@ class PlayerWorker {
 
   takeTurn(inputState, cb) {
     this.worker.onmessage = function(msg) {
+      const data = msg.data;
+      if (data.log) {
+        console.log.apply(console, data.log);
+        return;
+      }
       // TODO: safeguard against:
       // * making more than one move per turn
       // * calling postMessage directly with bad data
       // * better error handling
-      var response = msg.data;
+      var response = data;
       cb(response);
     };
 
@@ -73,7 +84,9 @@ export default class Player extends Entity {
       return cb();
     }
 
-    this.worker.takeTurn(null, turn => {
+    this.worker.takeTurn([
+      game.map, game.entities.map(e => e.serialize())
+    ], turn => {
       this.evaluateMove(game, turn);
       super.tick(game, cb);
     });

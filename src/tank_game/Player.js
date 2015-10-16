@@ -64,9 +64,15 @@ export default class Player extends Entity {
     super(startPos);
     this.playerId = i;
     this.worker = new PlayerWorker(source);
+    this.turn = 0;
   }
 
   tick(game, cb) {
+    // only move every other tick
+    if (++this.turn % 2 === 0) {
+      return cb();
+    }
+
     this.worker.takeTurn(null, turn => {
       this.evaluateMove(game, turn);
       super.tick(game, cb);

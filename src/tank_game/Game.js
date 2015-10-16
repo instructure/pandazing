@@ -30,6 +30,7 @@ var map2 = [
 
 export default class Game {
   constructor() {
+    this.tick = this.tick.bind(this);
     this.entities = [];
     this.reset();
   }
@@ -53,7 +54,7 @@ export default class Game {
       this.spawn(new Player(i + 1, start, player.source));
     });
 
-    this.timer = setInterval(this.tick.bind(this), 500);
+    this.tick();
   }
 
   spawn(entity) {
@@ -62,6 +63,10 @@ export default class Game {
   }
 
   tick() {
+    if (this.aborted) {
+      return;
+    }
+
     async.eachSeries(this.entities, (e, cb) => {
       e.tick(this, cb);
     }, err => {
@@ -78,6 +83,8 @@ export default class Game {
         clearInterval(this.timer);
       }
 
+      setTimeout(this.tick, 200);
+
       if (this.onupdate) {
         this.onupdate(this);
       }
@@ -85,7 +92,7 @@ export default class Game {
   }
 
   abort() {
-    clearInterval(this.timer);
+    this.aborted = true;
   }
 
   getCell(pos) {

@@ -3,7 +3,7 @@ import Entity from './Entity';
 class Explosion extends Entity {
   constructor(pos) {
     super(pos);
-    this.lifetime = 3;
+    this.lifetime = 7;
   }
 
   get type() {

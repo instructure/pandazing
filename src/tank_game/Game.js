@@ -7,11 +7,11 @@ var map1 = [
 'WWWWWWWWWWWWWWWWWWWWWWWW',
 'W____W_________________W',
 'W____W_S_______________W',
-'W_S__W_________________W',
-'W______________________W',
-'W______________________W',
-'W______________________W',
-'W_________________W__S_W',
+'W_S__W___wwwww_________W',
+'W________wwwww_________W',
+'W________wwwww_________W',
+'W________wwwww_________W',
+'W________wwwww____W__S_W',
 'W_______________S_W____W',
 'W_________________W____W',
 'WWWWWWWWWWWWWWWWWWWWWWWW'];
@@ -113,9 +113,10 @@ export default class Game {
   parseCell(cell) {
     switch(cell)
     {
-      case '_': return { type: 'empty' };
-      case 'W': return { type: 'wall' };
-      case 'S': return { type: 'empty', spawn: true };
+      case '_': return { type: 'empty', sprite: 'empty' };
+      case 'W': return { type: 'wall', sprite: 'wall' };
+      case 'w': return { type: 'water', sprite: 'water' };
+      case 'S': return { type: 'empty', sprite: 'empty', spawn: true };
       default: throw `invalid map character: ${cell}`;
     }
   }

@@ -14,7 +14,7 @@ export default class GameViz extends React.Component {
       {
         this.props.game.map.map((row, y) =>
           row.map((cell, x) =>
-            <Sprite key={[x, y]} x={x} y={y} sprite={cell.type} />
+            <Sprite key={[x, y]} x={x} y={y} sprite={cell.sprite} />
         ))
       }
       {

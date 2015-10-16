@@ -69,6 +69,16 @@ export function loginUser() {
   };
 }
 
+export function logoutUser() {
+  firebase.unauth();
+  // this feels hacky
+  return dispatch => {
+    dispatch(userUpdate(null));
+    dispatch(userAIsUpdate([]));
+    dispatch(allAisUpdate({}));
+  };
+}
+
 export function selectEditingAI(name) {
   return { type: SELECT_EDITING_AI, name };
 }

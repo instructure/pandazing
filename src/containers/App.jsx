@@ -13,7 +13,7 @@ import Styles from './App.css';
 import Game from '../tank_game/Game';
 
 import {
-  localLogin, loginUser, selectEditingAI, editAi
+  localLogin, loginUser, logoutUser, selectEditingAI, editAi
 } from '../store/actions';
 
 // HAX
@@ -47,7 +47,6 @@ class App extends React.Component {
     super();
     this.playSolo = this.playSolo.bind(this);
     this.playMulti = this.playMulti.bind(this);
-    this.logout = this.logout.bind(this);
     this.newProgram = this.newProgram.bind(this);
     this.changeName = this.changeName.bind(this);
   }
@@ -92,14 +91,6 @@ class App extends React.Component {
       }
     });
     this.game.run(players);
-  }
-
-  logout() {
-    this.props.store.unauth();
-    this.setState({uid: null});
-    if (this.firebaseRefs.user) {
-      this.unbind('user');
-    }
   }
 
   changeName(event) {
@@ -177,7 +168,7 @@ class App extends React.Component {
           <div className={Styles.sidebar}>
             <UserInfo
               onLogin={() => dispatch(loginUser())}
-              onLogout={this.logout}
+              onLogout={() => dispatch(logoutUser())}
               user={this.props.user}/>
             { this.props.user && <button onClick={this.newProgram}>New Program</button> }
             <br/>

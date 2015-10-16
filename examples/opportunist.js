@@ -13,6 +13,10 @@ function takeTurn(map, entities, me) {
   }
 }
 
+function includes(arr, item) {
+  return arr.filter(function(i) { return i === item; }).length > 0;
+}
+
 function facingEnemy(map, entities, me) {
   var x = me.x;
   var y = me.y;
@@ -21,7 +25,7 @@ function facingEnemy(map, entities, me) {
   }
   function scan(it) {
     it();
-    while (['empty', 'water'].includes(map.at(x, y))) {
+    while (includes(['empty', 'water'], map.at(x, y))) {
       if (enemyPresent(x, y))
         return true;
       it();

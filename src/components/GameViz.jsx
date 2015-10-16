@@ -23,8 +23,8 @@ export default class GameViz extends React.Component {
         )
       }
       {
-        this.props.game.messages.map(m =>
-          <p className={Styles.message}>{m}</p>
+        this.props.game.messages.map((m, i) =>
+          <p key={i} className={Styles.message}>{m}</p>
         )
       }
       </div>

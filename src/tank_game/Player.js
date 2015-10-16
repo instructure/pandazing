@@ -106,7 +106,7 @@ class PlayerWorker {
     };
 
     this.worker.onerror = function(err) {
-      console.log(`got worker error ${err}`);
+      console.log('got worker error', err);
       cb(null);
     };
 

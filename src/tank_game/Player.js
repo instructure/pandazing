@@ -2,8 +2,27 @@ import Entity from './Entity';
 import Bullet from './Bullet';
 
 var template = `
+function mapat(x, y) {
+  if (this[y] && this[y][x])
+    return this[y][x].type;
+  else
+    return null;
+}
+
+function entat(x, y, type) {
+  return this.filter(function(e) { return e.x === x && e.y === y &&
+    (!type || e.type === type); });
+}
+
 onmessage = function(msg) {
-  takeTurn.apply(this, msg.data);
+  var map = msg.data.map;
+  map.at = mapat;
+
+  var entities = msg.data.entities;
+  entities.at = entat;
+
+  var me = msg.data.me;
+  takeTurn(map, entities, me);
 }
 
 function moveForward() {
@@ -93,11 +112,11 @@ export default class Player extends Entity {
       return cb();
     }
 
-    this.worker.takeTurn([
-      game.map,
-      game.entities.map(e => e.serialize()),
-      this.serialize()
-    ], turn => {
+    this.worker.takeTurn({
+      map: game.map,
+      entities: game.entities.map(e => e.serialize()),
+      me: this.serialize()
+    }, turn => {
       this.evaluateMove(game, turn);
       super.tick(game, cb);
     });

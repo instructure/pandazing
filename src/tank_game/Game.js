@@ -121,7 +121,6 @@ export default class Game {
       case '_': return { type: 'empty' };
       case 'W': return { type: 'wall' };
       case 'S': return { type: 'empty', spawn: true };
-      // case '1': return { type: 'tank', player: 1, facing: 'east' };
       default: throw `invalid map character: ${cell}`;
     }
   }
@@ -136,11 +135,67 @@ export default class Game {
 
   static aiTemplate() {
     return (
-`function takeTurn(map, entities, me) {
+`/* Welcome to Pandazing!
+ * The goal of the game is to zap the other players while not getting zapped yourself.
+ * To do this, you'll have to write a javascript bot.
+ *
+ * Each turn, your takeTurn function will be called with the current state
+ * of the world. You'll then need to evaluate your options and choose your move.
+ */
+function takeTurn(map, entities, me) {
+  /* map is a two-dimensional array of objects representing the game tiles.
+     For instance, a 2x2 map would look like:
+       [
+         [{ x: 0, y: 0, type: 'empty' }, { x: 1, y: 0, type: 'wall' }],
+         [{ x: 0, y: 1, type: 'empty' }, { x: 1, y: 1, type: 'water' }]
+       ]
+
+     The easiest way to read the map is to call map.at(x, y), which will
+     return the type of tile at that location, or null if out of bounds.
+     In this example map.at(1, 0) would return 'wall', while map.at(4, 4)
+     would return null.
+  */
+
+  /* entities is an array of all the live entities on the board.
+     This includes Players, Bolts, and Explosions. Each entity contains
+     information about its position on the board, what direction it is facing,
+     and what type it is. For instance:
+       [{ x: 1, y: 3, type: 'Player', playerId: 1, facing: 'east' },
+        { x: 3, y: 7, type: 'Bolt', facing: 'north' }]
+
+     You can get a list of all entities at a map location by calling
+     entities.at(x, y). So entities.at(3, 7) would return
+       [{ x: 3, y: 7, type: 'Bolt', facing: 'north' }]
+   */
+
+   /* The 3rd parameter, me, is another copy of the entity representing your
+      own player. For instance it might be:
+        { x: 1, y: 3, type: 'Player', playerId: 2, facing: 'south' }
+    */
+
+   /* The only way to influence the game is through actions. You can take
+      one action per turn. The available actions are:
+        turnRight()   // turn 90 degrees right, e.g. east to south
+        turnLeft()    // turn 90 degrees left, e.g. north to west
+        moveForward() // move one square forward. if something is in the way do nothing
+        fire()        // fire a bolt in the direction you are facing
+        doNothing()   // do nothing this turn
+
+      Taking multiple actions, or not taking any action within 1 second,
+      will disqualify you.
+
+      Be careful! Bolts move twice as fast as players do.
+
+      You can call console.log("any message") to log debug information to
+      the web inspector console.
+    */
+
   if (Math.random() > 0.7) {
     turnRight();
   } else if (Math.random() > 0.7) {
     turnLeft();
+  } else if (Math.random() > 0.8) {
+    fire();
   } else {
     moveForward();
   }

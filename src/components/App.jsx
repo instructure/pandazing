@@ -24,6 +24,13 @@ function takeTurn(map) {
 }
 `;
 
+var dummyAi =
+`
+function takeTurn() {
+  doNothing();
+}
+`;
+
 
 export default class App extends React.Component {
   state = {
@@ -48,9 +55,8 @@ export default class App extends React.Component {
   }
 
   componentWillMount() {
-    this.game = new Game();
-    this.game.onupdate = game => this.setState({game});
-    this.setState({game: this.game});
+    // create a dummy game just to show the viz
+    this.createGame();
     var authData = this.props.store.getAuth();
     if (authData) {
       this.loggedIn(authData);
@@ -58,11 +64,27 @@ export default class App extends React.Component {
     this.bindAsObject(this.props.store.child('ais'), 'allAis');
   }
 
+  createGame() {
+    if (this.game) {
+      this.game.abort();
+    }
+    this.game = new Game();
+    this.game.onupdate = game => this.setState({game});
+    this.setState({game: this.game});
+  }
+
   playSolo() {
-    this.game.run([{source: this.state.currentAi.source}]);
+    this.createGame();
+    this.game.run([
+      {source: this.state.currentAi.source},
+      {source: dummyAi},
+      {source: dummyAi},
+      {source: dummyAi}
+    ]);
   }
 
   playMulti() {
+    this.createGame();
     var players = [];
     var getAi = name => {
       var [uid, ai] = name.split('/');

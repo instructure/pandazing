@@ -39,7 +39,7 @@ export default class Game {
     }
     this.entities.forEach(e => e.destroy());
     this.entities = [];
-    this.map = this.parseMap(map2);
+    this.map = this.parseMap(map1);
   }
 
   run(players, cb) {
@@ -75,6 +75,10 @@ export default class Game {
     if (this.onupdate) {
       this.onupdate(this);
     }
+  }
+
+  abort() {
+    clearInterval(this.timer);
   }
 
   getCell(pos) {

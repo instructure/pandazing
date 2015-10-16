@@ -21,6 +21,10 @@ function fire() {
   postMessage({turn: 'fire'});
 }
 
+function doNothing() {
+  postMessage({turn: 'nothing'});
+}
+
 `;
 
 // This isn't totally safe from people messing with things... see the `jailed`
@@ -110,6 +114,9 @@ export default class Player extends Entity {
       if (bullet.check(game)) {
         game.spawn(bullet);
       }
+      break;
+    case 'nothing':
+      break;
     }
   }
 

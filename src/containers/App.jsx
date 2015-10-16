@@ -16,28 +16,6 @@ import {
   localLogin, loginUser, logoutUser, selectEditingAI, editAi
 } from '../store/actions';
 
-// HAX
-var template =
-`
-function takeTurn(map) {
-  if (Math.random() > 0.7) {
-    turnRight();
-  } else if (Math.random() > 0.7) {
-    turnLeft();
-  } else {
-    moveForward();
-  }
-}
-`;
-
-var dummyAi =
-`
-function takeTurn() {
-  doNothing();
-}
-`;
-
-
 class App extends React.Component {
   state = {
     loginError: false
@@ -71,9 +49,9 @@ class App extends React.Component {
     this.createGame();
     this.game.run([
       {source: ai.source},
-      {source: dummyAi},
-      {source: dummyAi},
-      {source: dummyAi}
+      {source: Game.dummyAi()},
+      {source: Game.dummyAi()},
+      {source: Game.dummyAi()}
     ]);
   }
 
@@ -106,7 +84,7 @@ class App extends React.Component {
 
   newProgram() {
     var node = this.props.store.child(`ais/${this.state.uid}/Untitled`);
-    node.set({ name: 'Untitled', source: template });
+    node.set({ name: 'Untitled', source: Game.aiTemplate() });
     this.selectProgram('Untitled');
   }
 

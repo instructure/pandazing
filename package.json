@@ -65,7 +65,6 @@
     "react-hot-loader": "^1.2.8",
     "react-mixin": "^3.0.0",
     "react-redux": "^4.0.0",
-    "reactfire": "^0.5.1",
     "redux": "^3.0.2",
     "redux-logger": "^2.0.4",
     "redux-thunk": "^1.0.0",

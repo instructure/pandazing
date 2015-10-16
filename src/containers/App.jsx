@@ -5,7 +5,6 @@ import UserInfo from '../components/UserInfo.jsx';
 import Editor from '../components/Editor.jsx';
 import GameViz from '../components/GameViz.jsx';
 
-import ReactFireMixin from 'reactfire';
 import mixin from 'react-mixin';
 
 import Styles from './App.css';
@@ -148,7 +147,5 @@ class App extends React.Component {
     }
   }
 }
-
-mixin(App.prototype, ReactFireMixin);
 
 export default connect(a => a)(App);

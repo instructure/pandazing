@@ -1,7 +1,8 @@
 import React from 'react';
-import UserInfo from './UserInfo.jsx';
-import Editor from './Editor.jsx';
-import GameViz from './GameViz.jsx';
+import { connect } from 'react-redux';
+import UserInfo from '../components/UserInfo.jsx';
+import Editor from '../components/Editor.jsx';
+import GameViz from '../components/GameViz.jsx';
 
 import ReactFireMixin from 'reactfire';
 import mixin from 'react-mixin';
@@ -9,6 +10,8 @@ import mixin from 'react-mixin';
 import Styles from './App.css';
 
 import Game from '../tank_game/Game';
+
+import { localLogin, loginUser } from '../store/actions';
 
 // HAX
 var template =
@@ -32,7 +35,7 @@ function takeTurn() {
 `;
 
 
-export default class App extends React.Component {
+class App extends React.Component {
   state = {
     loginError: false,
     uid: null,
@@ -47,7 +50,6 @@ export default class App extends React.Component {
     this.edit = this.edit.bind(this);
     this.playSolo = this.playSolo.bind(this);
     this.playMulti = this.playMulti.bind(this);
-    this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.newProgram = this.newProgram.bind(this);
     this.changeName = this.changeName.bind(this);
@@ -57,11 +59,12 @@ export default class App extends React.Component {
   componentWillMount() {
     // create a dummy game just to show the viz
     this.createGame();
-    var authData = this.props.store.getAuth();
-    if (authData) {
-      this.loggedIn(authData);
-    }
-    this.bindAsObject(this.props.store.child('ais'), 'allAis');
+    this.props.dispatch(localLogin());
+    // var authData = this.props.store.getAuth();
+    // if (authData) {
+    //   this.loggedIn(authData);
+    // }
+    // this.bindAsObject(this.props.store.child('ais'), 'allAis');
   }
 
   createGame() {
@@ -97,24 +100,6 @@ export default class App extends React.Component {
       }
     });
     this.game.run(players);
-  }
-
-  login() {
-    this.props.store.authWithOAuthPopup('github', (error, authData) => {
-      if (error) {
-        this.setState({loginError: true});
-      } else {
-        var userData = {
-          handle: authData.github.username,
-          avatar: authData.github.profileImageURL,
-          name: authData.github.displayName,
-          email: authData.github.email
-        };
-        var user = this.props.store.child('users').child(authData.uid);
-        user.set(userData);
-        this.loggedIn(authData);
-      }
-    });
   }
 
   logout() {
@@ -171,6 +156,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    const { dispatch } = this.props;
     if (this.state.loginError) {
       return <div>Could not log in</div>;
     } else {
@@ -222,9 +208,9 @@ export default class App extends React.Component {
           </div>
           <div className={Styles.sidebar}>
             <UserInfo
-              onLogin={this.login}
+              onLogin={() => dispatch(loginUser())}
               onLogout={this.logout}
-              user={this.state.user}/>
+              user={this.props.user}/>
             { this.state.user && <button onClick={this.newProgram}>New Program</button> }
             <br/>
             { this.state.ais &&
@@ -242,3 +228,5 @@ export default class App extends React.Component {
 }
 
 mixin(App.prototype, ReactFireMixin);
+
+export default connect(a => a)(App);

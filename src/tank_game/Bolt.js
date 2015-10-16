@@ -18,6 +18,12 @@ export default class Bolt extends Entity {
     super.tick(game, cb);
   }
 
+  serialize() {
+    return Object.assign(super.serialize(), {
+      playerId: this.playerId
+    });
+  }
+
   check(game) {
     if (game.getCell(this).type === 'wall') {
       this.destroy(game);

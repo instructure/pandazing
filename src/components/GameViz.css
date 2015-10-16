@@ -1,5 +1,8 @@
+$msg-bgd: #023258;
+$msg-border: #fff;
+
 .root {
-  background: black;
+  background: gray;
   position: relative;
   font-size: 49px;
 
@@ -10,9 +13,12 @@
 
 .message {
   position: relative;
-  font-size: 0.3em;
+  font-size: 0.2em;
   color: white;
+  width: 26%;
   margin: 0;
   padding: 0.3em;
   text-shadow: 1px 1px #000;
+  opacity: 0.6;
+  background: $msg-bgd;
 }

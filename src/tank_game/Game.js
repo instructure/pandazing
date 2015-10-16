@@ -79,11 +79,10 @@ export default class Game {
 
       var players = this.entities.filter(e => e instanceof Player);
       if (players.length < 2) {
-        console.log('winner: ', players[0]);
-        clearInterval(this.timer);
+        console.log(`winner: Player ${players[0].playerId}`);
+      } else {
+        setTimeout(this.tick, 200);
       }
-
-      setTimeout(this.tick, 200);
 
       if (this.onupdate) {
         this.onupdate(this);

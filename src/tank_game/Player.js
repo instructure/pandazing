@@ -1,5 +1,5 @@
 import Entity from './Entity';
-import Bullet from './Bullet';
+import Bolt from './Bolt';
 
 var template = `
 function mapat(x, y) {
@@ -185,10 +185,10 @@ export default class Player extends Entity {
       this.facing = facings[this.realMod(facings.indexOf(this.facing) - 1, facings.length)];
       break;
     case 'fire':
-      var bulletPos = {x: this.x + vector.x, y: this.y + vector.y, facing: this.facing};
-      var bullet = new Bullet(bulletPos);
-      if (bullet.check(game)) {
-        game.spawn(bullet);
+      var boltPos = {x: this.x + vector.x, y: this.y + vector.y, facing: this.facing};
+      var bolt = new Bolt(boltPos);
+      if (bolt.check(game)) {
+        game.spawn(bolt);
       }
       break;
     case 'nothing':

@@ -62,16 +62,16 @@
   background-position: -8em -3em;
 }
 
-.bullet-north {
+.bolt-north {
   background-position: -9em -1em;
 }
-.bullet-east {
+.bolt-east {
   background-position: -9em -2em;
 }
-.bullet-south {
+.bolt-south {
   background-position: -9em -3em;
 }
-.bullet-west {
+.bolt-west {
   background-position: -9em -0em;
 }
 .explosion {

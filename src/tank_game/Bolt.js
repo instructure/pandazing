@@ -1,8 +1,8 @@
 import Entity from './Entity';
 
-export default class Bullet extends Entity {
+export default class Bolt extends Entity {
   get sprite() {
-    return `bullet-${this.facing}`;
+    return `bolt-${this.facing}`;
   }
 
   tick(game, cb) {

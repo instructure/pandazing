@@ -18,7 +18,7 @@ function includes(arr, item) {
 }
 
 function canFire(map, entities, me) {
-  return entities.filter(function(e) { return e.type === 'Bolt' && e.playerId === me.playerid }).length === 0;
+  return entities.filter(function(e) { return e.type === 'Bolt' && e.playerId === me.playerId }).length === 0;
 }
 
 function facingEnemy(map, entities, me) {

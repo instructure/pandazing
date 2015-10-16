@@ -30,6 +30,9 @@ console = {
     postMessage({log: Array.prototype.slice.apply(arguments)});
   }
 }
+function say(message) {
+  postMessage({say: message});
+}
 
 `;
 
@@ -49,6 +52,12 @@ class PlayerWorker {
         console.log.apply(console, data.log);
         return;
       }
+      if (data.say) {
+        // TODO: UI for messages/taunts
+        console.log(`Player said ${data.say}`);
+        return;
+      }
+
       // TODO: safeguard against:
       // * making more than one move per turn
       // * calling postMessage directly with bad data

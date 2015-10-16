@@ -39,7 +39,9 @@ export default class Bullet extends Entity {
     var hits = game.getEntities(this);
     if (hits.length > 0) {
       hits.forEach(h => h.damage(this));
-      game.spawn(new Explosion(this));
+      if (hits.filter(h => h.type === 'Player').length > 0) {
+        game.spawn(new Explosion(this));
+      }
       this.destroy();
       return false;
     }

@@ -1,5 +1,5 @@
 function takeTurn(map, entities, me) {
-  if (facingEnemy(map, entities, me)) {
+  if (facingEnemy(map, entities, me) && canFire(map, entities, me)) {
     fire();
     return;
   }
@@ -15,6 +15,10 @@ function takeTurn(map, entities, me) {
 
 function includes(arr, item) {
   return arr.filter(function(i) { return i === item; }).length > 0;
+}
+
+function canFire(map, entities, me) {
+  return entities.filter(function(e) { return e.type === 'Bolt' && e.playerId === me.playerid }).length === 0;
 }
 
 function facingEnemy(map, entities, me) {

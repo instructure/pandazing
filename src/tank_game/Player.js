@@ -199,10 +199,14 @@ export default class Player extends Entity {
       this.facing = facings[this.realMod(facings.indexOf(this.facing) - 1, facings.length)];
       break;
     case 'fire':
-      var boltPos = {x: this.x + vector.x, y: this.y + vector.y, facing: this.facing};
-      var bolt = new Bolt(boltPos, this);
-      if (bolt.check(game)) {
-        game.spawn(bolt);
+      const existingBolts =
+        game.entities.filter(e => e.type === 'Bolt' && e.playerId === this.playerId);
+      if (existingBolts.length === 0) {
+        var boltPos = {x: this.x + vector.x, y: this.y + vector.y, facing: this.facing};
+        var bolt = new Bolt(boltPos, this);
+        if (bolt.check(game)) {
+          game.spawn(bolt);
+        }
       }
       break;
     case 'nothing':

@@ -189,7 +189,8 @@ function takeTurn(map, entities, me) {
       Taking multiple actions, or not taking any action within 1 second,
       will disqualify you.
 
-      Be careful! Bolts move twice as fast as players do.
+      Be careful! Bolts move twice as fast as players do. Wands take a while to
+      recharge, each player can only have one bolt on screen at a time.
 
       You can call console.log("any message") to log debug information to
       the web inspector console.

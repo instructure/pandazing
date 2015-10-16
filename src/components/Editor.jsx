@@ -5,6 +5,15 @@ require('brace/mode/javascript');
 require('brace/theme/chrome');
 
 export default class Editor extends React.Component {
+  constructor() {
+    super();
+    this.rename = this.rename.bind(this);
+  }
+
+  rename(event) {
+    this.props.onRename(event.target.value);
+  }
+
   render() {
     const { program } = this.props;
     const disabled = !program;
@@ -12,7 +21,7 @@ export default class Editor extends React.Component {
     return (
       <div>
         <input type='text'
-          onChange={this.props.onRename}
+          onChange={this.rename}
           disabled={disabled}
           value={program && program.name} />
         <Ace

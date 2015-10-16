@@ -13,7 +13,7 @@ import Styles from './App.css';
 import Game from '../tank_game/Game';
 
 import {
-  localLogin, loginUser, logoutUser, newAi, selectEditingAi, editAi
+  localLogin, loginUser, logoutUser, newAi, selectEditingAi, editAi, renameAi
 } from '../store/actions';
 
 class App extends React.Component {
@@ -25,8 +25,6 @@ class App extends React.Component {
     super();
     this.playSolo = this.playSolo.bind(this);
     this.playMulti = this.playMulti.bind(this);
-    this.newProgram = this.newProgram.bind(this);
-    this.changeName = this.changeName.bind(this);
   }
 
   componentWillMount() {
@@ -71,23 +69,6 @@ class App extends React.Component {
     this.game.run(players);
   }
 
-  changeName(event) {
-    var newName = event.target.value;
-    if (newName.length > 0) {
-      this.firebaseRefs.currentAi.remove();
-      var node = this.firebaseRefs.currentAi.parent().child(newName);
-      node.set({ name: newName, source: this.state.currentAi.source });
-      this.unbind('currentAi');
-      this.bindAsObject(node, 'currentAi');
-    }
-  }
-
-  newProgram() {
-    var node = this.props.store.child(`ais/${this.state.uid}/Untitled`);
-    node.set({ name: 'Untitled', source: Game.aiTemplate() });
-    this.selectProgram('Untitled');
-  }
-
   findAi(ais, name) {
     return ais.filter(a => a.name === name)[0];
   }
@@ -113,7 +94,7 @@ class App extends React.Component {
             <div className={Styles.editing}>
               <div>
                 <Editor program={editingAi}
-                  onRename={this.changeName}
+                  onRename={(newName) => dispatch(renameAi(user.uid, editingAi.name, newName))}
                   onChange={(newSource) => dispatch(editAi(user.uid, editingAi.name, newSource))} />
                 <button disabled={!editingAi} onClick={this.playSolo}>Play Solo</button>
               </div>
@@ -155,7 +136,7 @@ class App extends React.Component {
             <br/>
             { ais.userAis.length > 0 &&
                 <select size={5}
-                        value={ais.editingAi && ais.editingAi.name}
+                        value={ais.editingAi && ais.editingAi}
                         onChange={(event) => dispatch(selectEditingAi(event.target.value))}>
                   { ais.userAis.map(ai => <option key={ai.name} value={ai.name}>{ai.name}</option>) }
                 </select>

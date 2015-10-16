@@ -97,3 +97,17 @@ export function newAi(uid, name, source) {
     dispatch(selectEditingAi(name));
   };
 }
+
+export function renameAi(uid, oldName, newName) {
+  return dispatch => {
+    if (newName.length > 0) {
+      const userAis = firebase.child('ais').child(uid);
+      userAis.child(oldName).once('value', data => {
+        const newData = { name: newName, source: data.val().source };
+        userAis.child(newName).set(newData);
+      });
+      userAis.child(oldName).remove();
+      dispatch(selectEditingAi(newName));
+    }
+  };
+}

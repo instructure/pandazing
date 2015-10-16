@@ -1,6 +1,7 @@
 export const USER_UPDATE = 'USER_UPDATE';
 export const FIREBASE_LOGIN = 'FIREBASE_LOGIN';
 export const AIS_UPDATE = 'AIS_UPDATE';
+export const ALL_AIS_UPDATE = 'ALL_AIS_UPDATE';
 export const SELECT_EDITING_AI = 'SELECT_EDITING_AI';
 
 import Firebase from 'firebase';
@@ -15,12 +16,21 @@ function userAIsUpdate(ais) {
   return { type: AIS_UPDATE, ais };
 }
 
-// used internally when we get logged in, either via oauth or saved localStorage
+function allAisUpdate(ais) {
+  return { type: ALL_AIS_UPDATE, ais };
+}
+
+// action used internally when we get logged in, either via oauth or saved
+// localStorage. sets up all the firebase listeners.
 function loggedIn(uid) {
   const node = firebase.child('users').child(uid);
   return dispatch => {
     node.on('value', data => dispatch(userUpdate(data.exportVal())));
     // should really subscribe to specific child updates
+    firebase.child('ais').on('value', data => {
+      dispatch(allAisUpdate(data.val()));
+    });
+    // ditto
     firebase.child('ais').child(uid).on('value', data => {
       let vals = [];
       // need to return false to continue iteration

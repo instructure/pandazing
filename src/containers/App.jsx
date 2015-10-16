@@ -80,7 +80,7 @@ class App extends React.Component {
     var players = [];
     var getAi = name => {
       var [uid, ai] = name.split('/');
-      return this.state.allAis[uid][ai];
+      return this.props.allAis[uid][ai];
     };
     [1, 2, 3, 4].forEach(i => {
       var name = this.refs[`player${i}Ai`].getDOMNode().value;
@@ -97,12 +97,6 @@ class App extends React.Component {
     if (this.firebaseRefs.user) {
       this.unbind('user');
     }
-  }
-
-  loggedIn(authData) {
-    this.setState({uid: authData.uid});
-    this.bindAsObject(this.props.store.child('users').child(authData.uid), 'user');
-    this.bindAsArray(this.props.store.child('ais').child(authData.uid), 'ais');
   }
 
   edit(newCode) {
@@ -131,9 +125,9 @@ class App extends React.Component {
     if (this.state.loginError) {
       return <div>Could not log in</div>;
     } else {
-      var allAis = this.state.allAis && Object.keys(this.state.allAis).map(uid =>
+      var allAis = this.props.allAis && Object.keys(this.props.allAis).map(uid =>
         uid !== '.key' &&
-        Object.keys(this.state.allAis[uid]).map(name => {
+        Object.keys(this.props.allAis[uid]).map(name => {
           var key = `${uid}/${name}`;
           return <option key={key} value={key}>{key}</option>;
         })

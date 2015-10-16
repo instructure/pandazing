@@ -13,6 +13,11 @@ import * as actions from './actions';
       { name: '', source: '' }
     ],
     editingAi: { name: '', source: '' }
+  },
+  allAis: {
+    <userId>: {
+      <name>: { name: '', source: '' }
+    }
   }
 }
 */
@@ -38,7 +43,17 @@ function ais(state = { userAis: [] }, action) {
   }
 }
 
+function allAis(state = {}, action) {
+  switch (action.type) {
+    case actions.ALL_AIS_UPDATE:
+      return Object.assign({}, action.ais);
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   user,
-  ais
+  ais,
+  allAis
 });

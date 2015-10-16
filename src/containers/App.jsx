@@ -84,7 +84,8 @@ class App extends React.Component {
         uid !== '.key' &&
         Object.keys(this.props.allAis[uid]).map(name => {
           var key = `${uid}/${name}`;
-          return <option key={key} value={key}>{key}</option>;
+          var disp = `${this.props.allAis[uid][name].username}/${name}`;
+          return <option key={key} value={key}>{disp}</option>;
         })
       );
       return (
@@ -130,7 +131,8 @@ class App extends React.Component {
               onLogout={() => dispatch(logoutUser())}
               user={this.props.user}/>
             { this.props.user &&
-              <button onClick={() => dispatch(newAi(user.uid, 'Untitled', Game.aiTemplate()))}>
+              <button onClick={() =>
+                  dispatch(newAi(user.uid, user.handle, 'Untitled', Game.aiTemplate()))}>
                 New Program
               </button> }
             <br/>

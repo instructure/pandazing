@@ -91,9 +91,9 @@ export function editAi(uid, editingAi, newSource) {
   };
 }
 
-export function newAi(uid, name, source) {
+export function newAi(uid, username, name, source) {
   return dispatch => {
-    firebase.child('ais').child(uid).child(name).set({name, source});
+    firebase.child('ais').child(uid).child(name).set({username, name, source});
     dispatch(selectEditingAi(name));
   };
 }
@@ -103,7 +103,7 @@ export function renameAi(uid, oldName, newName) {
     if (newName.length > 0) {
       const userAis = firebase.child('ais').child(uid);
       userAis.child(oldName).once('value', data => {
-        const newData = { name: newName, source: data.val().source };
+        const newData = Object.assign({}, data.val(), { name: newName });
         userAis.child(newName).set(newData);
       });
       userAis.child(oldName).remove();

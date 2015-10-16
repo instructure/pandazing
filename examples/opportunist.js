@@ -21,7 +21,7 @@ function facingEnemy(map, entities, me) {
   }
   function scan(it) {
     it();
-    while (map.at(x, y) === 'empty') {
+    while (['empty', 'water'].includes(map.at(x, y))) {
       if (enemyPresent(x, y))
         return true;
       it();

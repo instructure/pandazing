@@ -33,7 +33,7 @@ export default class Editor extends React.Component {
           value={program && program.source}
           onChange={this.props.onChange}
           tabSize={2}
-          editorProps={{$blockScrolling: true}} />
+          editorProps={{$blockScrolling: Infinity}} />
       </div>
     );
   }

@@ -92,7 +92,7 @@ export default class Game {
   getCell(pos) {
     var cell = (this.map[pos.y] || [])[pos.x];
     if (!cell) {
-      cell = { type: 'oob' };
+      cell = { type: 'wall' };
     }
     return cell;
   }

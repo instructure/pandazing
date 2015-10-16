@@ -64,8 +64,10 @@ export default class Game {
   tick() {
     async.eachSeries(this.entities, (e, cb) => {
       e.tick(this, cb);
-    }, _err => {
+    }, err => {
       // TODO: err
+      if (err)
+        console.log(err);
       var [alive, dead] = _.partition(this.entities, e => e.alive);
       this.entities = alive;
       dead.forEach(e => e.destroy());

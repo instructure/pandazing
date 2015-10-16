@@ -3,4 +3,4 @@ app:
   volumes:
     - .:/usr/src/app
   environment:
-    VIRTUAL_HOST: tanks.docker
+    VIRTUAL_HOST: pandazing.docker

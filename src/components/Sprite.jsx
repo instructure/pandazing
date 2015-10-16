@@ -11,7 +11,7 @@ export default class Sprite extends React.Component {
     };
     var spriteClassNames = classNames(
       Styles.root,
-      Styles[this.props.type],
+      Styles[this.props.sprite],
       Styles[this.props.facing]
     );
     return (

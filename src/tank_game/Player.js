@@ -97,8 +97,14 @@ export default class Player extends Entity {
     this.worker.shutdown();
   }
 
-  get type() {
+  get sprite() {
     return `tank-${this.playerId}-${this.facing}`;
+  }
+
+  serialize() {
+    return Object.assign(super.serialize(), {
+      playerId: this.playerId
+    });
   }
 
   damage(weapon) {

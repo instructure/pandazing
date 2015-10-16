@@ -14,12 +14,12 @@ export default class GameViz extends React.Component {
       {
         this.props.game.map.map((row, y) =>
           row.map((cell, x) =>
-            <Sprite key={[x, y]} x={x} y={y} type={cell.type} />
+            <Sprite key={[x, y]} x={x} y={y} sprite={cell.type} />
         ))
       }
       {
         this.props.game.entities.map(e =>
-          <Sprite key={e._id} x={e.x} y={e.y} type={e.type} />
+          <Sprite key={e._id} x={e.x} y={e.y} sprite={e.sprite} />
         )
       }
       </div>

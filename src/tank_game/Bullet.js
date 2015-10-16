@@ -6,7 +6,7 @@ class Explosion extends Entity {
     this.lifetime = 7;
   }
 
-  get type() {
+  get sprite() {
     return 'explosion';
   }
 
@@ -19,7 +19,7 @@ class Explosion extends Entity {
 }
 
 export default class Bullet extends Entity {
-  get type() {
+  get sprite() {
     return `bullet-${this.facing}`;
   }
 

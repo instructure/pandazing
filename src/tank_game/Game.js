@@ -103,9 +103,10 @@ export default class Game {
     return cell;
   }
 
-  getEntities(pos) {
+  getEntities(pos, type) {
     return this.entities.filter(e =>
-      e._id !== pos._id && e.x === pos.x && e.y === pos.y);
+      e._id !== pos._id && e.x === pos.x && e.y === pos.y &&
+      (!type || e.type === type));
   }
 
   parseMap(strings) {

@@ -28,8 +28,12 @@ export default class Entity {
       y: this.y,
       facing: this.facing,
       _id: this._id,
-      type: this.constructor.name
+      type: this.type
     };
+  }
+
+  get type() {
+    return this.constructor.name;
   }
 
   static vector(facing) {

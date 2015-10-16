@@ -10,7 +10,6 @@ module.exports = {
   target: 'web',
   entry: {
     javascript: './src/entry.jsx'
-    //vendor: [ 'react' ]
   },
   output: {
     path: './dist',
@@ -83,11 +82,8 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        PANDA_PUSH_APP_ID: JSON.stringify(process.env.PANDA_PUSH_APP_ID),
-        PANDA_PUSH_BASE_URL: JSON.stringify(process.env.PANDA_PUSH_BASE_URL)
       }
     }),
-    // new webpack.optimize.CommonsChunkPlugin('vendor.js', ['vendor']),
     new HtmlWebpackPlugin({
       template: 'src/index.html', // Load a custom template
       inject: 'body', // Inject all scripts into the body,

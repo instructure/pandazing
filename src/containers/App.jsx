@@ -11,7 +11,7 @@ import Styles from './App.css';
 
 import Game from '../tank_game/Game';
 
-import { localLogin, loginUser } from '../store/actions';
+import { localLogin, loginUser, selectEditingAI } from '../store/actions';
 
 // HAX
 var template =
@@ -37,12 +37,7 @@ function takeTurn() {
 
 class App extends React.Component {
   state = {
-    loginError: false,
-    uid: null,
-    user: null,
-    ais: null, // the player's own ais
-    allAis: null, // everybody's ais!
-    currentAi: null
+    loginError: false
   };
 
   constructor() {
@@ -53,18 +48,12 @@ class App extends React.Component {
     this.logout = this.logout.bind(this);
     this.newProgram = this.newProgram.bind(this);
     this.changeName = this.changeName.bind(this);
-    this.programChanged = this.programChanged.bind(this);
   }
 
   componentWillMount() {
     // create a dummy game just to show the viz
     this.createGame();
     this.props.dispatch(localLogin());
-    // var authData = this.props.store.getAuth();
-    // if (authData) {
-    //   this.loggedIn(authData);
-    // }
-    // this.bindAsObject(this.props.store.child('ais'), 'allAis');
   }
 
   createGame() {
@@ -79,7 +68,7 @@ class App extends React.Component {
   playSolo() {
     this.createGame();
     this.game.run([
-      {source: this.state.currentAi.source},
+      {source: this.props.ais.editingAi.source},
       {source: dummyAi},
       {source: dummyAi},
       {source: dummyAi}
@@ -137,26 +126,8 @@ class App extends React.Component {
     this.selectProgram('Untitled');
   }
 
-  selectProgram(name) {
-    var node = this.props.store.child(`ais/${this.state.uid}/${name}`);
-    if (this.firebaseRefs.currentAi) {
-      this.unbind('currentAi');
-    }
-    this.bindAsObject(node, 'currentAi');
-  }
-
-  programChanged(event) {
-    this.selectProgram(event.target.value);
-  }
-
-  componentWillUpdate() {
-    if (!this.state.currentAi && this.state.ais && this.state.ais.length > 0) {
-      this.selectProgram(this.state.ais[0].name);
-    }
-  }
-
   render() {
-    const { dispatch } = this.props;
+    const { dispatch, ais } = this.props;
     if (this.state.loginError) {
       return <div>Could not log in</div>;
     } else {
@@ -173,12 +144,12 @@ class App extends React.Component {
             <GameViz game={this.state.game}/>
             <div className={Styles.editing}>
               <div>
-                { this.state.currentAi &&
-                    <Editor program={this.state.currentAi}
+                { ais.editingAi &&
+                    <Editor program={ais.editingAi}
                       onRename={this.changeName}
                       onChange={this.edit} />
                 }
-                { this.state.currentAi && <button onClick={this.playSolo}>Play Solo</button> }
+                { ais.editingAi && <button onClick={this.playSolo}>Play Solo</button> }
               </div>
               <div>
                 <p>Multiplayer</p>
@@ -211,13 +182,13 @@ class App extends React.Component {
               onLogin={() => dispatch(loginUser())}
               onLogout={this.logout}
               user={this.props.user}/>
-            { this.state.user && <button onClick={this.newProgram}>New Program</button> }
+            { this.props.user && <button onClick={this.newProgram}>New Program</button> }
             <br/>
-            { this.state.ais &&
+            { ais.userAis.length > 0 &&
                 <select size={5}
-                        value={this.state.currentAi && this.state.currentAi.name}
-                        onChange={this.programChanged}>
-                  { this.state.ais.map(ai => <option key={ai.name} value={ai.name}>{ai.name}</option>) }
+                        value={ais.editingAi && ais.editingAi.name}
+                        onChange={(event) => dispatch(selectEditingAI(event.target.value))}>
+                  { ais.userAis.map(ai => <option key={ai.name} value={ai.name}>{ai.name}</option>) }
                 </select>
             }
           </div>

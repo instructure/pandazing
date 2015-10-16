@@ -1,6 +1,22 @@
 import { combineReducers } from 'redux';
 import * as actions from './actions';
 
+/*
+{
+  user: {
+    uid: '',
+    handle: '',
+    avatar: '',
+  },
+  ais: {
+    userAis: [
+      { name: '', source: '' }
+    ],
+    editingAi: { name: '', source: '' }
+  }
+}
+*/
+
 function user(state = null, action) {
   switch (action.type) {
     case actions.USER_UPDATE:
@@ -10,6 +26,19 @@ function user(state = null, action) {
   }
 }
 
+function ais(state = { userAis: [] }, action) {
+  switch (action.type) {
+    case actions.AIS_UPDATE:
+      return Object.assign({}, state, { userAis: action.ais });
+    case actions.SELECT_EDITING_AI:
+      const ai = state.userAis.filter(a => a.name === action.name)[0];
+      return Object.assign({}, state, { editingAi: ai });
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
-  user
+  user,
+  ais
 });

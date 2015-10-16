@@ -1,12 +1,19 @@
 import Entity from './Entity';
 
 class Explosion extends Entity {
+  constructor(pos) {
+    super(pos);
+    this.lifetime = 3;
+  }
+
   get type() {
     return 'explosion';
   }
 
   tick(game, cb) {
-    this.destroy();
+    if (--this.lifetime <= 0) {
+      this.destroy();
+    }
     super.tick(game, cb);
   }
 }

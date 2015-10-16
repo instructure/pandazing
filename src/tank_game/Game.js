@@ -40,7 +40,7 @@ export default class Game {
     }
     this.entities.forEach(e => e.destroy());
     this.entities = [];
-    this.map = this.parseMap(map1);
+    this.map = this.parseMap(map2);
   }
 
   run(players, cb) {

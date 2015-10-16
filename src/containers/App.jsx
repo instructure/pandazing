@@ -11,7 +11,9 @@ import Styles from './App.css';
 
 import Game from '../tank_game/Game';
 
-import { localLogin, loginUser, selectEditingAI } from '../store/actions';
+import {
+  localLogin, loginUser, selectEditingAI, editAi
+} from '../store/actions';
 
 // HAX
 var template =
@@ -42,7 +44,6 @@ class App extends React.Component {
 
   constructor() {
     super();
-    this.edit = this.edit.bind(this);
     this.playSolo = this.playSolo.bind(this);
     this.playMulti = this.playMulti.bind(this);
     this.logout = this.logout.bind(this);
@@ -66,9 +67,10 @@ class App extends React.Component {
   }
 
   playSolo() {
+    const ai = this.findAi(this.props.ais.userAis, this.props.ais.editingAi);
     this.createGame();
     this.game.run([
-      {source: this.props.ais.editingAi.source},
+      {source: ai.source},
       {source: dummyAi},
       {source: dummyAi},
       {source: dummyAi}
@@ -99,10 +101,6 @@ class App extends React.Component {
     }
   }
 
-  edit(newCode) {
-    this.firebaseRefs.currentAi.update({source: newCode});
-  }
-
   changeName(event) {
     var newName = event.target.value;
     if (newName.length > 0) {
@@ -120,8 +118,14 @@ class App extends React.Component {
     this.selectProgram('Untitled');
   }
 
+  findAi(ais, name) {
+    return ais.filter(a => a.name === name)[0];
+  }
+
   render() {
-    const { dispatch, ais } = this.props;
+    const { user, dispatch, ais } = this.props;
+    const editingAi = this.findAi(ais.userAis, ais.editingAi);
+
     if (this.state.loginError) {
       return <div>Could not log in</div>;
     } else {
@@ -139,9 +143,9 @@ class App extends React.Component {
             <div className={Styles.editing}>
               <div>
                 { ais.editingAi &&
-                    <Editor program={ais.editingAi}
+                    <Editor program={editingAi}
                       onRename={this.changeName}
-                      onChange={this.edit} />
+                      onChange={(newSource) => dispatch(editAi(user.uid, editingAi.name, newSource))} />
                 }
                 { ais.editingAi && <button onClick={this.playSolo}>Play Solo</button> }
               </div>

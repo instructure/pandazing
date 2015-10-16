@@ -3,6 +3,7 @@ export const FIREBASE_LOGIN = 'FIREBASE_LOGIN';
 export const AIS_UPDATE = 'AIS_UPDATE';
 export const ALL_AIS_UPDATE = 'ALL_AIS_UPDATE';
 export const SELECT_EDITING_AI = 'SELECT_EDITING_AI';
+export const EDIT_AI = 'EDIT_AI';
 
 import Firebase from 'firebase';
 const firebase = new Firebase('https://inst-tanks.firebaseio.com');
@@ -70,4 +71,12 @@ export function loginUser() {
 
 export function selectEditingAI(name) {
   return { type: SELECT_EDITING_AI, name };
+}
+
+export function editAi(uid, editingAi, newSource) {
+  return dispatch => {
+    firebase.child('ais').child(uid).child(editingAi).update({
+      source: newSource
+    });
+  };
 }

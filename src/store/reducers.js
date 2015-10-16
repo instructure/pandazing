@@ -12,7 +12,7 @@ import * as actions from './actions';
     userAis: [
       { name: '', source: '' }
     ],
-    editingAi: { name: '', source: '' }
+    editingAi: <name>
   },
   allAis: {
     <userId>: {
@@ -36,8 +36,7 @@ function ais(state = { userAis: [] }, action) {
     case actions.AIS_UPDATE:
       return Object.assign({}, state, { userAis: action.ais });
     case actions.SELECT_EDITING_AI:
-      const ai = state.userAis.filter(a => a.name === action.name)[0];
-      return Object.assign({}, state, { editingAi: ai });
+      return Object.assign({}, state, { editingAi: action.name });
     default:
       return state;
   }

@@ -9,7 +9,7 @@ export default class Entity {
     this._id = ++lastId;
   }
 
-  destroy() {
+  destroy(game) {
     this.alive = false;
   }
 
@@ -17,7 +17,7 @@ export default class Entity {
     cb();
   }
 
-  damage(weapon) {
+  damage(game, weapon) {
     // by default damage does nothing
   }
 

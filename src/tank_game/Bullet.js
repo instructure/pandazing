@@ -1,23 +1,5 @@
 import Entity from './Entity';
 
-class Explosion extends Entity {
-  constructor(pos) {
-    super(pos);
-    this.lifetime = 7;
-  }
-
-  get sprite() {
-    return 'explosion';
-  }
-
-  tick(game, cb) {
-    if (--this.lifetime <= 0) {
-      this.destroy();
-    }
-    super.tick(game, cb);
-  }
-}
-
 export default class Bullet extends Entity {
   get sprite() {
     return `bullet-${this.facing}`;
@@ -33,16 +15,13 @@ export default class Bullet extends Entity {
 
   check(game) {
     if (game.getCell(this).type !== 'empty') {
-      this.destroy();
+      this.destroy(game);
       return false;
     }
     var hits = game.getEntities(this);
     if (hits.length > 0) {
-      hits.forEach(h => h.damage(this));
-      if (hits.filter(h => h.type === 'Player').length > 0) {
-        game.spawn(new Explosion(this));
-      }
-      this.destroy();
+      hits.forEach(h => h.damage(game, this));
+      this.destroy(game);
       return false;
     }
     return true;

@@ -39,7 +39,7 @@ export default class Game {
     if (this.timer) {
       clearInterval(this.timer);
     }
-    this.entities.forEach(e => e.destroy());
+    this.entities.forEach(e => e.destroy(this));
     this.entities = [];
     this.map = this.parseMap(map1);
   }
@@ -75,7 +75,7 @@ export default class Game {
         console.log(err);
       var [alive, dead] = _.partition(this.entities, e => e.alive);
       this.entities = alive;
-      dead.forEach(e => e.destroy());
+      dead.forEach(e => e.destroy(this));
 
       var players = this.entities.filter(e => e instanceof Player);
       if (players.length < 2) {

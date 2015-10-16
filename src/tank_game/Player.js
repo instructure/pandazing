@@ -55,6 +55,24 @@ function say(message) {
 
 `;
 
+class Explosion extends Entity {
+  constructor(pos) {
+    super(pos);
+    this.lifetime = 7;
+  }
+
+  get sprite() {
+    return 'explosion';
+  }
+
+  tick(game, cb) {
+    if (--this.lifetime <= 0) {
+      this.destroy(game);
+    }
+    super.tick(game, cb);
+  }
+}
+
 // This isn't totally safe from people messing with things... see the `jailed`
 // npm module for a better sandbox using iframes as well as web workers.
 class PlayerWorker {
@@ -122,8 +140,9 @@ export default class Player extends Entity {
     });
   }
 
-  destroy() {
-    super.destroy();
+  destroy(game) {
+    game.spawn(new Explosion(this));
+    super.destroy(game);
     this.worker.shutdown();
   }
 
@@ -137,8 +156,8 @@ export default class Player extends Entity {
     });
   }
 
-  damage(weapon) {
-    this.destroy();
+  damage(game, weapon) {
+    this.destroy(game);
   }
 
   evaluateMove(game, turn) {

@@ -1,7 +1,8 @@
 import React from 'react';
-import UserInfo from './UserInfo.jsx';
-import Editor from './Editor.jsx';
-import GameViz from './GameViz.jsx';
+import { connect } from 'react-redux';
+import UserInfo from '../components/UserInfo.jsx';
+import Editor from '../components/Editor.jsx';
+import GameViz from '../components/GameViz.jsx';
 
 import ReactFireMixin from 'reactfire';
 import mixin from 'react-mixin';
@@ -9,6 +10,10 @@ import mixin from 'react-mixin';
 import Styles from './App.css';
 
 import Game from '../tank_game/Game';
+
+import {
+  localLogin, loginUser, selectEditingAI, editAi
+} from '../store/actions';
 
 // HAX
 var template =
@@ -32,36 +37,24 @@ function takeTurn() {
 `;
 
 
-export default class App extends React.Component {
+class App extends React.Component {
   state = {
-    loginError: false,
-    uid: null,
-    user: null,
-    ais: null, // the player's own ais
-    allAis: null, // everybody's ais!
-    currentAi: null
+    loginError: false
   };
 
   constructor() {
     super();
-    this.edit = this.edit.bind(this);
     this.playSolo = this.playSolo.bind(this);
     this.playMulti = this.playMulti.bind(this);
-    this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.newProgram = this.newProgram.bind(this);
     this.changeName = this.changeName.bind(this);
-    this.programChanged = this.programChanged.bind(this);
   }
 
   componentWillMount() {
     // create a dummy game just to show the viz
     this.createGame();
-    var authData = this.props.store.getAuth();
-    if (authData) {
-      this.loggedIn(authData);
-    }
-    this.bindAsObject(this.props.store.child('ais'), 'allAis');
+    this.props.dispatch(localLogin());
   }
 
   createGame() {
@@ -74,9 +67,10 @@ export default class App extends React.Component {
   }
 
   playSolo() {
+    const ai = this.findAi(this.props.ais.userAis, this.props.ais.editingAi);
     this.createGame();
     this.game.run([
-      {source: this.state.currentAi.source},
+      {source: ai.source},
       {source: dummyAi},
       {source: dummyAi},
       {source: dummyAi}
@@ -88,7 +82,7 @@ export default class App extends React.Component {
     var players = [];
     var getAi = name => {
       var [uid, ai] = name.split('/');
-      return this.state.allAis[uid][ai];
+      return this.props.allAis[uid][ai];
     };
     [1, 2, 3, 4].forEach(i => {
       var name = this.refs[`player${i}Ai`].getDOMNode().value;
@@ -99,40 +93,12 @@ export default class App extends React.Component {
     this.game.run(players);
   }
 
-  login() {
-    this.props.store.authWithOAuthPopup('github', (error, authData) => {
-      if (error) {
-        this.setState({loginError: true});
-      } else {
-        var userData = {
-          handle: authData.github.username,
-          avatar: authData.github.profileImageURL,
-          name: authData.github.displayName,
-          email: authData.github.email
-        };
-        var user = this.props.store.child('users').child(authData.uid);
-        user.set(userData);
-        this.loggedIn(authData);
-      }
-    });
-  }
-
   logout() {
     this.props.store.unauth();
     this.setState({uid: null});
     if (this.firebaseRefs.user) {
       this.unbind('user');
     }
-  }
-
-  loggedIn(authData) {
-    this.setState({uid: authData.uid});
-    this.bindAsObject(this.props.store.child('users').child(authData.uid), 'user');
-    this.bindAsArray(this.props.store.child('ais').child(authData.uid), 'ais');
-  }
-
-  edit(newCode) {
-    this.firebaseRefs.currentAi.update({source: newCode});
   }
 
   changeName(event) {
@@ -152,31 +118,20 @@ export default class App extends React.Component {
     this.selectProgram('Untitled');
   }
 
-  selectProgram(name) {
-    var node = this.props.store.child(`ais/${this.state.uid}/${name}`);
-    if (this.firebaseRefs.currentAi) {
-      this.unbind('currentAi');
-    }
-    this.bindAsObject(node, 'currentAi');
-  }
-
-  programChanged(event) {
-    this.selectProgram(event.target.value);
-  }
-
-  componentWillUpdate() {
-    if (!this.state.currentAi && this.state.ais && this.state.ais.length > 0) {
-      this.selectProgram(this.state.ais[0].name);
-    }
+  findAi(ais, name) {
+    return ais.filter(a => a.name === name)[0];
   }
 
   render() {
+    const { user, dispatch, ais } = this.props;
+    const editingAi = this.findAi(ais.userAis, ais.editingAi);
+
     if (this.state.loginError) {
       return <div>Could not log in</div>;
     } else {
-      var allAis = this.state.allAis && Object.keys(this.state.allAis).map(uid =>
+      var allAis = this.props.allAis && Object.keys(this.props.allAis).map(uid =>
         uid !== '.key' &&
-        Object.keys(this.state.allAis[uid]).map(name => {
+        Object.keys(this.props.allAis[uid]).map(name => {
           var key = `${uid}/${name}`;
           return <option key={key} value={key}>{key}</option>;
         })
@@ -187,12 +142,10 @@ export default class App extends React.Component {
             <GameViz game={this.state.game}/>
             <div className={Styles.editing}>
               <div>
-                { this.state.currentAi &&
-                    <Editor program={this.state.currentAi}
-                      onRename={this.changeName}
-                      onChange={this.edit} />
-                }
-                { this.state.currentAi && <button onClick={this.playSolo}>Play Solo</button> }
+                <Editor program={editingAi}
+                  onRename={this.changeName}
+                  onChange={(newSource) => dispatch(editAi(user.uid, editingAi.name, newSource))} />
+                <button disabled={!editingAi} onClick={this.playSolo}>Play Solo</button>
               </div>
               <div>
                 <p>Multiplayer</p>
@@ -222,16 +175,16 @@ export default class App extends React.Component {
           </div>
           <div className={Styles.sidebar}>
             <UserInfo
-              onLogin={this.login}
+              onLogin={() => dispatch(loginUser())}
               onLogout={this.logout}
-              user={this.state.user}/>
-            { this.state.user && <button onClick={this.newProgram}>New Program</button> }
+              user={this.props.user}/>
+            { this.props.user && <button onClick={this.newProgram}>New Program</button> }
             <br/>
-            { this.state.ais &&
+            { ais.userAis.length > 0 &&
                 <select size={5}
-                        value={this.state.currentAi && this.state.currentAi.name}
-                        onChange={this.programChanged}>
-                  { this.state.ais.map(ai => <option key={ai.name} value={ai.name}>{ai.name}</option>) }
+                        value={ais.editingAi && ais.editingAi.name}
+                        onChange={(event) => dispatch(selectEditingAI(event.target.value))}>
+                  { ais.userAis.map(ai => <option key={ai.name} value={ai.name}>{ai.name}</option>) }
                 </select>
             }
           </div>
@@ -242,3 +195,5 @@ export default class App extends React.Component {
 }
 
 mixin(App.prototype, ReactFireMixin);
+
+export default connect(a => a)(App);

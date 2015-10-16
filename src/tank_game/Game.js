@@ -136,7 +136,7 @@ export default class Game {
 
   static aiTemplate() {
     return (
-`function takeTurn(map) {
+`function takeTurn(map, entities, me) {
   if (Math.random() > 0.7) {
     turnRight();
   } else if (Math.random() > 0.7) {

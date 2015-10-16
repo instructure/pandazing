@@ -28,6 +28,7 @@ export default class Editor extends React.Component {
           mode="javascript"
           theme="chrome"
           height="15em"
+          width="50em"
           readOnly={disabled}
           value={program && program.source}
           onChange={this.props.onChange}

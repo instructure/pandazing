@@ -94,7 +94,9 @@ export default class Player extends Entity {
     }
 
     this.worker.takeTurn([
-      game.map, game.entities.map(e => e.serialize())
+      game.map,
+      game.entities.map(e => e.serialize()),
+      this.serialize()
     ], turn => {
       this.evaluateMove(game, turn);
       super.tick(game, cb);

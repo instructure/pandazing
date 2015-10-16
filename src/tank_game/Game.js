@@ -4,17 +4,17 @@ import async from 'async';
 import Player from './Player';
 
 var map1 = [
-'WWWWWWWWWWWWWWWWWWWWWWWW',
-'W____W_________________W',
-'W____W_S_______________W',
-'W_S__W___wwwww_________W',
-'W________wwwww_________W',
-'W________wwwww_________W',
-'W________wwwww_________W',
-'W________wwwww____W__S_W',
-'W_______________S_W____W',
-'W_________________W____W',
-'WWWWWWWWWWWWWWWWWWWWWWWW'];
+'WWWWWWWWWWWWWWWWWWWWWWW',
+'W____W________________W',
+'W____W_S______________W',
+'W_S__W___wwwww________W',
+'W________wwwww________W',
+'W________wwwww________W',
+'W________wwwww________W',
+'W________wwwww___W__S_W',
+'W______________S_W____W',
+'W________________W____W',
+'WWWWWWWWWWWWWWWWWWWWWWW'];
 
 var map2 = [
 'S___S',

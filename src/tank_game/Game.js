@@ -76,9 +76,9 @@ export default class Game {
       var players = this.entities.filter(e => e instanceof Player);
       if (players.length < 2) {
         if (players.length === 0) {
-          console.log('A tie!');
+          this.addMessage('Panda wizards hate ties! Play again.');
         } else {
-          console.log(`winner: Player ${players[0].playerId}`);
+          this.addMessage(`Player ${players[0].playerId} is the last panda standing.`);
         }
       } else {
         setTimeout(this.tick, 200);

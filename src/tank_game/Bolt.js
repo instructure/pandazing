@@ -1,6 +1,11 @@
 import Entity from './Entity';
 
 export default class Bolt extends Entity {
+  constructor(pos, player) {
+    super(pos);
+    this.playerId = player.playerId;
+  }
+
   get sprite() {
     return `bolt-${this.facing}`;
   }

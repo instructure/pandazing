@@ -49,6 +49,8 @@ console = {
     postMessage({log: Array.prototype.slice.apply(arguments)});
   }
 }
+
+// leaving this undocumented, just for fun
 function say(message) {
   postMessage({say: message});
 }
@@ -166,6 +168,10 @@ export default class Player extends Entity {
   }
 
   damage(game, weapon) {
+    if (weapon.playerId) {
+      game.addMessage(
+        `Player ${this.playerId} gets zapped by Player ${weapon.playerId}!`);
+    }
     this.destroy(game);
   }
 
@@ -194,7 +200,7 @@ export default class Player extends Entity {
       break;
     case 'fire':
       var boltPos = {x: this.x + vector.x, y: this.y + vector.y, facing: this.facing};
-      var bolt = new Bolt(boltPos);
+      var bolt = new Bolt(boltPos, this);
       if (bolt.check(game)) {
         game.spawn(bolt);
       }
@@ -203,7 +209,7 @@ export default class Player extends Entity {
       break;
     default:
       // TODO: display failure message
-      game.addMessage(`Player ${this.playerId} took a wrong move and vanishes`);
+      game.addMessage(`Player ${this.playerId} drops his wand on his foot.`);
       this.destroy(game);
       break;
     }

@@ -6,16 +6,21 @@ require('brace/theme/chrome');
 
 export default class Editor extends React.Component {
   render() {
+    const { program } = this.props;
+    const disabled = !program;
+
     return (
       <div>
         <input type='text'
           onChange={this.props.onRename}
-          value={this.props.program.name} />
+          disabled={disabled}
+          value={program && program.name} />
         <Ace
           mode="javascript"
           theme="chrome"
           height="15em"
-          value={this.props.program.source}
+          readOnly={disabled}
+          value={program && program.source}
           onChange={this.props.onChange}
           tabSize={2}
           editorProps={{$blockScrolling: true}} />

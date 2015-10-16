@@ -142,12 +142,10 @@ class App extends React.Component {
             <GameViz game={this.state.game}/>
             <div className={Styles.editing}>
               <div>
-                { ais.editingAi &&
-                    <Editor program={editingAi}
-                      onRename={this.changeName}
-                      onChange={(newSource) => dispatch(editAi(user.uid, editingAi.name, newSource))} />
-                }
-                { ais.editingAi && <button onClick={this.playSolo}>Play Solo</button> }
+                <Editor program={editingAi}
+                  onRename={this.changeName}
+                  onChange={(newSource) => dispatch(editAi(user.uid, editingAi.name, newSource))} />
+                <button disabled={!editingAi} onClick={this.playSolo}>Play Solo</button>
               </div>
               <div>
                 <p>Multiplayer</p>

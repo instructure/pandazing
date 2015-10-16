@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { findDOMNode } from 'react-dom';
 import UserInfo from '../components/UserInfo.jsx';
 import Editor from '../components/Editor.jsx';
 import GameViz from '../components/GameViz.jsx';
@@ -85,7 +86,7 @@ class App extends React.Component {
       return this.props.allAis[uid][ai];
     };
     [1, 2, 3, 4].forEach(i => {
-      var name = this.refs[`player${i}Ai`].getDOMNode().value;
+      var name = findDOMNode(this.refs[`player${i}Ai`]).value;
       if (name !== 'none') {
         players.push({source: getAi(name).source });
       }

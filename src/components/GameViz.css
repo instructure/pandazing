@@ -1,9 +1,9 @@
 .root {
   background: black;
   position: relative;
-  font-size: 33px;
+  font-size: 49px;
 
   /* cheat to fill in the missing sides of the grid */
-  border-left: 1px solid #c8c8c8;
-  border-top: 1px solid #c8c8c8;
+  border-right: 1px solid #757575;
+  border-bottom: 1px solid #757575;
 }

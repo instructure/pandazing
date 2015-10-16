@@ -74,7 +74,11 @@ export default class Game {
 
       var players = this.entities.filter(e => e instanceof Player);
       if (players.length < 2) {
-        console.log(`winner: Player ${players[0].playerId}`);
+        if (players.length === 0) {
+          console.log('A tie!');
+        } else {
+          console.log(`winner: Player ${players[0].playerId}`);
+        }
       } else {
         setTimeout(this.tick, 200);
       }

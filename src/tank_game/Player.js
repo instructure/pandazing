@@ -83,8 +83,10 @@ class PlayerWorker {
   }
 
   takeTurn(inputState, cb) {
+    var response;
     this.worker.onmessage = function(msg) {
       const data = msg.data;
+      if (!data) return;
       if (data.log) {
         console.log.apply(console, data.log);
         return;
@@ -95,17 +97,24 @@ class PlayerWorker {
         return;
       }
 
-      // TODO: safeguard against:
-      // * making more than one move per turn
-      // * calling postMessage directly with bad data
-      // * better error handling
-      var response = data;
+      if (response) {
+        return;
+      }
+
+      response = data;
       cb(response);
     };
 
     this.worker.onerror = function(err) {
-      throw `got worker error ${err}`;
+      console.log(`got worker error ${err}`);
+      cb(null);
     };
+
+    setTimeout(() => {
+      if (!response) {
+        cb(null);
+      }
+    }, 1000);
 
     this.worker.postMessage(inputState);
   }
@@ -162,8 +171,7 @@ export default class Player extends Entity {
 
   evaluateMove(game, turn) {
     if (!turn) {
-      // TODO: disqualify?
-      return;
+      turn = {};
     }
 
     const facings = ['north', 'east', 'south', 'west'];
@@ -192,6 +200,10 @@ export default class Player extends Entity {
       }
       break;
     case 'nothing':
+      break;
+    default:
+      // TODO: display failure message
+      this.destroy(game);
       break;
     }
   }

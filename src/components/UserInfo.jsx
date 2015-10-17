@@ -4,14 +4,16 @@ import Styles from './UserInfo.css';
 
 export default class UserInfo extends React.Component {
   render() {
+    const { user } = this.props;
+
     return (
-      <div className={Styles.userinfo}>
-      {this.props.user.uid &&
-        <div>
-          Hello, {this.props.user.handle}
+      <div className={Styles.root}>
+      {user.uid &&
+        <div className={Styles.user}>
+          Hello, {user.handle}
         </div>
       }
-      {this.props.user.uid ?
+      {user.uid ?
         <Button onClick={this.props.onLogout}>Log Out</Button> :
         <Button onClick={this.props.onLogin}>Log In!</Button>
       }

@@ -90,6 +90,7 @@ class App extends React.Component {
         return <option key={key} value={key}>{disp}</option>;
       })
     );
+
     return (
       <div className={Styles.root}>
         <Border>

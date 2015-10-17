@@ -75,7 +75,7 @@ button {
   flex: 1 77%;
 }
 .currentbot select {
-  padding: $pz-pad;
+  padding: 12px;
   background: black;
   border: 1px solid white;
   border-radius: 0;
@@ -92,7 +92,7 @@ button {
   text-align: right;
   background: none;
   width: 100%;
-  padding: $pz-pad 0;
+  padding: 12px0;
 }
 
 

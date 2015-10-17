@@ -60,7 +60,7 @@ button {
 
 /****** Layout ********/
 
-.main {
+.controlPanel {
   display: flex;
   align-content: flex-start;
 }
@@ -95,9 +95,6 @@ button {
   font-family: $pz-font;
   font-size: 0.8em;
   color: white;
-}
-.botlist {
-  margin: 5px;
 }
 .button_battle {
   font-size: 2em;

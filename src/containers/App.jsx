@@ -100,40 +100,37 @@ class App extends React.Component {
 
         <GameViz game={this.state.game}/>
 
-        <div className={Styles.main}>
+        <div className={Styles.controlPanel}>
+          <Border>
+            <div className={Styles.bot}>
+              <Title>MAKE YOUR PANDA BOT</Title>
 
-            <Border>
-              <div className={Styles.bot}>
-                <Title>MAKE YOUR PANDA BOT</Title>
+              <div className={Styles.bot_stuff}>
+                <Editor program={editingAi}
+                  onRename={(newName) => dispatch(renameAi(user.uid, editingAi.name, newName))}
+                  onChange={(newSource) => dispatch(editAi(user.uid, editingAi.name, newSource))} />
 
-                <div className={Styles.bot_stuff}>
-                  <div className={Styles.botedit}>
-                    <Editor program={editingAi}
-                      onRename={(newName) => dispatch(renameAi(user.uid, editingAi.name, newName))}
-                      onChange={(newSource) => dispatch(editAi(user.uid, editingAi.name, newSource))} />
+                <div className={Styles.botlist}>
+                  <button className="button--link" disabled={!user.uid} onClick={() =>
+                      dispatch(newAi(user.uid, user.handle, 'Untitled', Game.aiTemplate()))}>
+                    [+] New Bot
+                  </button>
+                  <div>
+                    <select size={10}
+                            value={ais.editingAi && ais.editingAi}
+                            onChange={(event) => dispatch(selectEditingAi(event.target.value))}>
+                      { _.values(userAis).map(ai =>
+                        <option key={ai.name} value={ai.name}>{ai.name}</option>) }
+                    </select>
                   </div>
-
-                  <div className={Styles.botlist}>
-                    <button className="button--link" disabled={!user.uid} onClick={() =>
-                        dispatch(newAi(user.uid, user.handle, 'Untitled', Game.aiTemplate()))}>
-                      [+] New Bot
-                    </button>
-                    <div>
-                      <select size={10}
-                              value={ais.editingAi && ais.editingAi}
-                              onChange={(event) => dispatch(selectEditingAi(event.target.value))}>
-                        { _.values(userAis).map(ai =>
-                          <option key={ai.name} value={ai.name}>{ai.name}</option>) }
-                      </select>
-                    </div>
-                    <div className={Styles.actions}>
-                      <button  disabled={!editingAi} onClick={this.playSolo}>Test Bot</button>
-                    </div>
+                  <div className={Styles.actions}>
+                    <button  disabled={!editingAi} onClick={this.playSolo}>Test Bot</button>
                   </div>
                 </div>
-
               </div>
-            </Border>
+
+            </div>
+          </Border>
 
 
 

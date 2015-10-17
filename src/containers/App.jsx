@@ -7,6 +7,7 @@ import UserInfo from '../components/UserInfo.jsx';
 import Editor from '../components/Editor.jsx';
 import GameViz from '../components/GameViz.jsx';
 import Border from '../components/Border.jsx';
+import Title from '../components/Title.jsx';
 
 import mixin from 'react-mixin';
 
@@ -103,7 +104,7 @@ class App extends React.Component {
 
             <Border>
               <div className={Styles.bot}>
-                <h2>MAKE YOUR PANDA BOT</h2>
+                <Title>MAKE YOUR PANDA BOT</Title>
 
                 <div className={Styles.bot_stuff}>
                   <div className={Styles.botedit}>
@@ -139,7 +140,7 @@ class App extends React.Component {
             <div className={Styles.multibot}>
               <div className={Styles.border}>
               <div className={Styles.multibot_select}>
-                <h2>BATTLE SETUP</h2>
+                <Title>BATTLE SETUP</Title>
 
                 <div>
                   <select ref='player1Ai'>

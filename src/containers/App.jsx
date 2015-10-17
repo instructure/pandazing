@@ -6,6 +6,7 @@ import _ from 'underscore';
 import UserInfo from '../components/UserInfo.jsx';
 import Editor from '../components/Editor.jsx';
 import GameViz from '../components/GameViz.jsx';
+import Border from '../components/Border.jsx';
 
 import mixin from 'react-mixin';
 
@@ -89,11 +90,18 @@ class App extends React.Component {
     );
     return (
       <div className={Styles.root}>
-        <div>
-          <GameViz game={this.state.game}/>
-          <div className={Styles.main}>
+        <Border>
+          <UserInfo
+              onLogin={() => dispatch(loginUser())}
+              onLogout={() => dispatch(logoutUser())}
+              user={user}/>
+        </Border>
 
-              <div className={Styles.border}>
+        <GameViz game={this.state.game}/>
+
+        <div className={Styles.main}>
+
+            <Border>
               <div className={Styles.bot}>
                 <h2>MAKE YOUR PANDA BOT</h2>
 
@@ -124,48 +132,41 @@ class App extends React.Component {
                 </div>
 
               </div>
-              </div>
+            </Border>
 
 
 
-              <div className={Styles.multibot}>
-                <div className={Styles.border}>
-                <div className={Styles.multibot_select}>
-                  <h2>BATTLE SETUP</h2>
+            <div className={Styles.multibot}>
+              <div className={Styles.border}>
+              <div className={Styles.multibot_select}>
+                <h2>BATTLE SETUP</h2>
 
-                  <div>
-                    <select ref='player1Ai'>
-                      <option value='none'>None</option>
-                      { allAis }
-                    </select>
-                    <br/>
-                    <select ref='player2Ai'>
-                      <option value='none'>None</option>
-                      { allAis }
-                    </select>
-                    <br/>
-                    <select ref='player3Ai'>
-                      <option value='none'>None</option>
-                      { allAis }
-                    </select>
-                    <br/>
-                    <select ref='player4Ai'>
-                      <option value='none'>None</option>
-                      { allAis }
-                    </select>
-                  </div>
+                <div>
+                  <select ref='player1Ai'>
+                    <option value='none'>None</option>
+                    { allAis }
+                  </select>
+                  <br/>
+                  <select ref='player2Ai'>
+                    <option value='none'>None</option>
+                    { allAis }
+                  </select>
+                  <br/>
+                  <select ref='player3Ai'>
+                    <option value='none'>None</option>
+                    { allAis }
+                  </select>
+                  <br/>
+                  <select ref='player4Ai'>
+                    <option value='none'>None</option>
+                    { allAis }
+                  </select>
                 </div>
-                </div>
-                <button className={Styles.button_battle} onClick={this.playMulti}>Battle!</button>
               </div>
+              </div>
+              <button className={Styles.button_battle} onClick={this.playMulti}>Battle!</button>
+            </div>
 
-          </div>
-          <div className={Styles.border}>
-          <UserInfo
-              onLogin={() => dispatch(loginUser())}
-              onLogout={() => dispatch(logoutUser())}
-              user={user}/>
-          </div>
         </div>
       </div>
     );

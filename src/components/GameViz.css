@@ -13,9 +13,9 @@ $msg-border: #fff;
 
 .message {
   position: relative;
-  font-size: 0.2em;
+  font-size: 0.3em;
   color: white;
-  width: 26%;
+  width: 30%;
   margin: 0;
   padding: 0.3em;
   text-shadow: 1px 1px #000;

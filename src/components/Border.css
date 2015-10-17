@@ -3,3 +3,9 @@
   border-radius: 4px;
   margin: 5px 0;
 }
+
+.inner {
+  border: 2px solid white;
+  margin: 1px;
+  border-radius: 4px;
+}

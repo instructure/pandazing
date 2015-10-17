@@ -4,16 +4,6 @@ $pz-font: monospace;
 $pz-border: 3px solid white;
 $pz-title: 2em;
 
-h1,h2,h3 {
-  font-weight: 500;
-  line-height: 1.1;
-  padding: 0;
-  margin: 0;
-}
-h2 {
-  margin-bottom: 15px;
-}
-
 .root {
   box-sizing: border-box;
   display: flex;
@@ -45,26 +35,13 @@ h2 {
 
 /****** Layout ********/
 
-.main {
+.controlPanel {
   display: flex;
   align-content: flex-start;
 }
 
-.bot,
-.multibot_select {
-  border: 2px solid white;
-  margin: 1px;
-  border-radius: 4px;
-  padding: 20px;
-}
 .multibot {
-  border-width: 2px;
   flex: 1;
-}
-/**** Bot Create/Edit ***/
-
-.bot_stuff {
-  display: flex;
 }
 
 /**** Multiplayer ***/
@@ -81,8 +58,3 @@ h2 {
   font-size: 0.8em;
   color: white;
 }
-.botlist {
-  margin: 5px;
-}
-
-

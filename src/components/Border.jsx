@@ -6,7 +6,9 @@ export default class Border extends React.Component {
   render() {
     return (
       <div className={Styles.root}>
-        {this.props.children}
+        <div className={Styles.inner}>
+          {this.props.children}
+        </div>
       </div>
     );
   }

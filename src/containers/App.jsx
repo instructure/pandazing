@@ -101,53 +101,18 @@ class App extends React.Component {
 
         <GameViz game={this.state.game}/>
 
-        <div className={Styles.main}>
+        <div className={Styles.controlPanel}>
+          <Border>
+            <Editor uid={user.uid} userAis={_.values(userAis)} program={editingAi}
+              onRename={(newName) => dispatch(renameAi(user.uid, editingAi.name, newName))}
+              onChange={(newSource) => dispatch(editAi(user.uid, editingAi.name, newSource))}
+              onSelect={(event) => dispatch(selectEditingAi(event.target.value))}
+              onPlay={this.playSolo}
+              onCreate={() => dispatch(newAi(user.uid, user.handle, 'Untitled', Game.aiTemplate()))} />
+          </Border>
 
+          <div className={Styles.multibot}>
             <Border>
-              <div className={Styles.bot}>
-                <Title>MAKE YOUR PANDA BOT</Title>
-
-                <div className={Styles.bot_stuff}>
-                  <div className={Styles.botedit}>
-                    <Editor program={editingAi}
-                      onRename={(newName) => dispatch(renameAi(user.uid, editingAi.name, newName))}
-                      onChange={(newSource) => dispatch(editAi(user.uid, editingAi.name, newSource))} />
-                  </div>
-
-                  <div className={Styles.botlist}>
-                    <Button
-                      disabled={!user.uid}
-                      onClick={() =>
-                        dispatch(newAi(user.uid, user.handle, 'Untitled', Game.aiTemplate()))}
-                    >
-                      [+] New Bot
-                    </Button>
-                    <div>
-                      <select size={10}
-                              value={ais.editingAi && ais.editingAi}
-                              onChange={(event) => dispatch(selectEditingAi(event.target.value))}>
-                        { _.values(userAis).map(ai =>
-                          <option key={ai.name} value={ai.name}>{ai.name}</option>) }
-                      </select>
-                    </div>
-                    <div className={Styles.actions}>
-                      <Button
-                        disabled={!editingAi}
-                        onClick={this.playSolo}
-                      >
-                        Test Bot
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </Border>
-
-
-
-            <div className={Styles.multibot}>
-              <Border>
               <div className={Styles.multibot_select}>
                 <Title>BATTLE SETUP</Title>
 
@@ -181,7 +146,6 @@ class App extends React.Component {
                 Battle!
               </Button>
             </div>
-
         </div>
       </div>
     );

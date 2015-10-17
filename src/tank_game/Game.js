@@ -37,7 +37,7 @@ export default class Game {
     this.entities.forEach(e => e.destroy(this));
     this.entities = [];
     this.messages = [];
-    this.map = this.parseMap(map1);
+    this.loadMap(map1);
   }
 
   run(players, cb) {
@@ -112,6 +112,32 @@ export default class Game {
     return strings.map((row, y) =>
       Array.prototype.map.call(row, (cell, x) =>
         Object.assign({x, y}, this.parseCell(cell))
+    ));
+  }
+
+  loadMap(strings) {
+    this.map = this.parseMap(strings);
+    // define the water edges
+    this.map.map((row, y) =>
+      row.map((cell, x) => {
+        if (cell.type === 'water') {
+          let additions = [];
+          if (this.getCell({x: cell.x, y: cell.y - 1}).type !== 'water') {
+            additions.push('t');
+          } else if (this.getCell({x: cell.x, y: cell.y + 1}).type !== 'water') {
+            additions.push('b');
+          }
+          if (this.getCell({x: cell.x - 1, y: cell.y}).type !== 'water') {
+            additions.push('l');
+          } else if (this.getCell({x: cell.x + 1, y: cell.y}).type !== 'water') {
+            additions.push('r');
+          }
+          if (additions.length > 0) {
+            cell.sprite += '-' + additions.join('');
+          }
+        }
+        return cell;
+      }
     ));
   }
 
@@ -196,9 +222,9 @@ function takeTurn(map, entities, me) {
       the web inspector console.
     */
 
-  if (Math.random() > 0.7) {
+  if (Math.random() > 0.8) {
     turnRight();
-  } else if (Math.random() > 0.7) {
+  } else if (Math.random() > 0.8) {
     turnLeft();
   } else if (Math.random() > 0.8) {
     fire();

@@ -30,8 +30,15 @@ function ais(state = {}, action) {
   switch (action.type) {
     case actions.AIS_UPDATE:
       return Object.assign({}, state, action.ais);
+    default:
+      return state;
+  }
+}
+
+function editingAi(state = null, action) {
+  switch (action.type) {
     case actions.SELECT_EDITING_AI:
-      return Object.assign({}, state, { editingAi: action.name });
+      return action.name;
     default:
       return state;
   }
@@ -39,5 +46,6 @@ function ais(state = {}, action) {
 
 export default combineReducers({
   user,
-  ais
+  ais,
+  editingAi
 });

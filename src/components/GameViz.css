@@ -5,6 +5,7 @@ $msg-border: #fff;
   background: gray;
   position: relative;
   font-size: 49px;
+  margin-top: 0.5em;
 
   /* cheat to fill in the missing sides of the grid */
   border-right: 1px solid #757575;

@@ -4,6 +4,7 @@ import { findDOMNode } from 'react-dom';
 import _ from 'underscore';
 
 import UserInfo from '../components/UserInfo.jsx';
+import AiList from '../components/AiList.jsx';
 import Editor from '../components/Editor.jsx';
 import GameViz from '../components/GameViz.jsx';
 import Border from '../components/Border.jsx';
@@ -43,7 +44,7 @@ class App extends React.Component {
   }
 
   playSolo() {
-    const ai = this.findAi(this.props.ais.editingAi);
+    const ai = this.findAi(this.props.editingAi);
     this.createGame();
     this.game.run([
       {source: ai.source},
@@ -80,7 +81,7 @@ class App extends React.Component {
 
   render() {
     const { user, dispatch, ais } = this.props;
-    const editingAi = this.findAi(ais.editingAi);
+    const editingAi = this.findAi(this.props.editingAi);
     const userAis = this.userAis();
 
     var allAis = Object.keys(this.props.ais).map(uid =>
@@ -93,31 +94,29 @@ class App extends React.Component {
 
     return (
       <div className={Styles.root}>
-        <Border>
-          <UserInfo
-              onLogin={() => dispatch(loginUser())}
-              onLogout={() => dispatch(logoutUser())}
-              user={user}/>
-        </Border>
-
         <GameViz game={this.state.game}/>
 
         <div className={Styles.controlPanel}>
-          <Border>
-            <Editor uid={user.uid} userAis={_.values(userAis)} program={editingAi}
+          <Border className={Styles.editor}>
+            { editingAi ?
+            <Editor uid={user.uid} program={editingAi}
               onRename={(newName) => dispatch(renameAi(user.uid, editingAi.name, newName))}
               onChange={(newSource) => dispatch(editAi(user.uid, editingAi.name, newSource))}
+              onReturn={() => dispatch(selectEditingAi(null))}
+              onPlay={this.playSolo} />
+            :
+            <AiList user={user} ais={_.values(userAis)}
+              onLogin={() => dispatch(loginUser())}
+              onLogout={() => dispatch(logoutUser())}
               onSelect={(event) => dispatch(selectEditingAi(event.target.value))}
-              onPlay={this.playSolo}
               onCreate={() => dispatch(newAi(user.uid, user.handle, 'Untitled', Game.aiTemplate()))} />
+            }
           </Border>
 
-          <div className={Styles.multibot}>
-            <Border>
-              <GameSetup ais={allAis}
-                onPlay={this.playMulti} />
-            </Border>
-          </div>
+          <Border className={Styles.gameSetup}>
+            <GameSetup ais={allAis}
+              onPlay={this.playMulti} />
+          </Border>
         </div>
       </div>
     );

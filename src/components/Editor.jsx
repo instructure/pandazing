@@ -25,42 +25,32 @@ export default class Editor extends React.Component {
 
     return (
       <div className={Styles.root}>
-        <Title>MAKE YOUR PANDA BOT</Title>
-        <Ace
-          mode="javascript"
-          theme="tomorrow_night_bright"
-          height="22em"
-          width="60em"
-          readOnly={disabled}
-          value={program && program.source}
-          onChange={this.props.onChange}
-          tabSize={2}
-          editorProps={{$blockScrolling: Infinity}} />
-        <div className={Styles.title_box}>
-          <label className={Styles.label}>Bot Name:</label>
-
-          <input type='text'
-            onChange={this.rename}
-            disabled={disabled}
-            className={Styles.input}
-            value={program && program.name} />
-
-          <Button disabled={!uid} onClick={this.props.onCreate}>
-            [+] New Bot
-          </Button>
+        <div className={Styles.main}>
+          <div className={Styles.header}>
+            <Title>MAKE YOUR PANDA BOT</Title>
+            <div className={Styles.botName}>
+              <label className={Styles.label}>Bot Name:</label>
+              <input type='text'
+                onChange={this.rename}
+                disabled={disabled}
+                className={Styles.input}
+                value={program && program.name} />
+            </div>
+          </div>
+          <Ace
+            mode="javascript"
+            theme="tomorrow_night_bright"
+            height="22em"
+            width="60em"
+            readOnly={disabled}
+            value={program && program.source}
+            onChange={this.props.onChange}
+            tabSize={2}
+            editorProps={{$blockScrolling: Infinity}} />
         </div>
-        <div className={Styles.botlist}>
-          <div>
-            <select size={10}
-                    value={program && program.name}
-                    onChange={this.props.onSelect}>
-              { this.props.userAis.map(ai =>
-                <option key={ai.name} value={ai.name}>{ai.name}</option>) }
-            </select>
-          </div>
-          <div className={Styles.actions}>
-            <Button disabled={!program} onClick={this.props.onPlay}>Test Bot</Button>
-          </div>
+        <div className={Styles.actions}>
+          <Button onClick={this.props.onPlay}>Test</Button>
+          <Button onClick={this.props.onReturn}>Go Back</Button>
         </div>
       </div>
     );

@@ -1,0 +1,16 @@
+.root {
+  padding: 0.3em 0.8em;
+  display: flex;
+  flex-flow: column;
+}
+
+.root select {
+  background-color: black;
+  color: white;
+  height: 10em;
+  font-family: $pz-font;
+  border: 1px solid #fff;
+  font-size: 1em;
+  padding: 0.2em;
+  margin-bottom: 0.8em;
+}

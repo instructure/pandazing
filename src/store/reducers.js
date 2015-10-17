@@ -9,20 +9,15 @@ import * as actions from './actions';
     avatar: '',
   },
   ais: {
-    userAis: [
-      { name: '', source: '' }
-    ],
-    editingAi: <name>
-  },
-  allAis: {
     <userId>: {
       <name>: { name: '', source: '' }
-    }
+    },
+    editingAi: <name> // <userId> is the logged-in user
   }
 }
 */
 
-function user(state = null, action) {
+function user(state = {}, action) {
   switch (action.type) {
     case actions.USER_UPDATE:
       return action.user;
@@ -31,10 +26,10 @@ function user(state = null, action) {
   }
 }
 
-function ais(state = { userAis: [] }, action) {
+function ais(state = {}, action) {
   switch (action.type) {
     case actions.AIS_UPDATE:
-      return Object.assign({}, state, { userAis: action.ais });
+      return Object.assign({}, state, action.ais);
     case actions.SELECT_EDITING_AI:
       return Object.assign({}, state, { editingAi: action.name });
     default:
@@ -42,17 +37,7 @@ function ais(state = { userAis: [] }, action) {
   }
 }
 
-function allAis(state = {}, action) {
-  switch (action.type) {
-    case actions.ALL_AIS_UPDATE:
-      return Object.assign({}, action.ais);
-    default:
-      return state;
-  }
-}
-
 export default combineReducers({
   user,
-  ais,
-  allAis
+  ais
 });

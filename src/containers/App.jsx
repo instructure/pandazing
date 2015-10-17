@@ -137,7 +137,7 @@ class App extends React.Component {
 
 
             <div className={Styles.multibot}>
-              <div className={Styles.border}>
+              <Border>
               <div className={Styles.multibot_select}>
                 <h2>BATTLE SETUP</h2>
 
@@ -163,7 +163,7 @@ class App extends React.Component {
                   </select>
                 </div>
               </div>
-              </div>
+              </Border>
               <button className={Styles.button_battle} onClick={this.playMulti}>Battle!</button>
             </div>
 

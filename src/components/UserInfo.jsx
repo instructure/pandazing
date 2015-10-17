@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../components/Button.jsx';
 import Styles from './UserInfo.css';
 
 export default class UserInfo extends React.Component {
@@ -11,8 +12,8 @@ export default class UserInfo extends React.Component {
         </div>
       }
       {this.props.user.uid ?
-        <button onClick={this.props.onLogout}>Log Out</button> :
-        <button onClick={this.props.onLogin}>Log In!</button>
+        <Button onClick={this.props.onLogout}>Log Out</Button> :
+        <Button onClick={this.props.onLogin}>Log In!</Button>
       }
       </div>);
   }

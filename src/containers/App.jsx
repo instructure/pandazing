@@ -8,6 +8,7 @@ import Editor from '../components/Editor.jsx';
 import GameViz from '../components/GameViz.jsx';
 import Border from '../components/Border.jsx';
 import Title from '../components/Title.jsx';
+import Button from '../components/Button.jsx';
 
 import mixin from 'react-mixin';
 
@@ -114,10 +115,13 @@ class App extends React.Component {
                   </div>
 
                   <div className={Styles.botlist}>
-                    <button className="button--link" disabled={!user.uid} onClick={() =>
-                        dispatch(newAi(user.uid, user.handle, 'Untitled', Game.aiTemplate()))}>
+                    <Button
+                      disabled={!user.uid}
+                      onClick={() =>
+                        dispatch(newAi(user.uid, user.handle, 'Untitled', Game.aiTemplate()))}
+                    >
                       [+] New Bot
-                    </button>
+                    </Button>
                     <div>
                       <select size={10}
                               value={ais.editingAi && ais.editingAi}
@@ -127,7 +131,12 @@ class App extends React.Component {
                       </select>
                     </div>
                     <div className={Styles.actions}>
-                      <button  disabled={!editingAi} onClick={this.playSolo}>Test Bot</button>
+                      <Button
+                        disabled={!editingAi}
+                        onClick={this.playSolo}
+                      >
+                        Test Bot
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -165,7 +174,12 @@ class App extends React.Component {
                 </div>
               </div>
               </Border>
-              <button className={Styles.button_battle} onClick={this.playMulti}>Battle!</button>
+              <Button
+                buttonType="battle"
+                onClick={this.playMulti}
+              >
+                Battle!
+              </Button>
             </div>
 
         </div>

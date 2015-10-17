@@ -43,21 +43,6 @@ h2 {
   margin: 5px 0;
 }
 
-button {
-  background: black;
-  border: 2px solid #aaa;
-  border-top: none;
-  border-left: none;
-  box-shadow: inset 2px 2px 0 #fff;
-  color: #fff;
-  padding: 0.5em 0.8em;
-  font-family: $pz-font;
-  font-size: 1em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-
 /****** Layout ********/
 
 .main {
@@ -99,21 +84,5 @@ button {
 .botlist {
   margin: 5px;
 }
-.button_battle {
-  font-size: 2em;
-  width: 100%;
-  margin: 15px 5px 5px 5px;
-  background: blue;
-  border: 6px solid white;
-  border-radius: 4px;
-  box-shadow: none;
-}
-/*.botlist button {
-  border: none;
-  box-shadow: none;
-  font-size: 1em;
-  text-align: right;
-  background: none;
-  width: 100%;
-  padding: 12px0;
-}*/
+
+

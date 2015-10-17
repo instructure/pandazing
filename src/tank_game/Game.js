@@ -196,9 +196,9 @@ function takeTurn(map, entities, me) {
       the web inspector console.
     */
 
-  if (Math.random() > 0.7) {
+  if (Math.random() > 0.8) {
     turnRight();
-  } else if (Math.random() > 0.7) {
+  } else if (Math.random() > 0.8) {
     turnLeft();
   } else if (Math.random() > 0.8) {
     fire();

@@ -8,7 +8,7 @@ import Editor from '../components/Editor.jsx';
 import GameViz from '../components/GameViz.jsx';
 import Border from '../components/Border.jsx';
 import Title from '../components/Title.jsx';
-import Button from '../components/Button.jsx';
+import GameSetup from '../components/GameSetup.jsx';
 
 import mixin from 'react-mixin';
 
@@ -113,39 +113,10 @@ class App extends React.Component {
 
           <div className={Styles.multibot}>
             <Border>
-              <div className={Styles.multibot_select}>
-                <Title>BATTLE SETUP</Title>
-
-                <div>
-                  <select ref='player1Ai'>
-                    <option value='none'>None</option>
-                    { allAis }
-                  </select>
-                  <br/>
-                  <select ref='player2Ai'>
-                    <option value='none'>None</option>
-                    { allAis }
-                  </select>
-                  <br/>
-                  <select ref='player3Ai'>
-                    <option value='none'>None</option>
-                    { allAis }
-                  </select>
-                  <br/>
-                  <select ref='player4Ai'>
-                    <option value='none'>None</option>
-                    { allAis }
-                  </select>
-                </div>
-              </div>
-              </Border>
-              <Button
-                buttonType="battle"
-                onClick={this.playMulti}
-              >
-                Battle!
-              </Button>
-            </div>
+              <GameSetup ais={allAis}
+                onPlay={this.playMulti} />
+            </Border>
+          </div>
         </div>
       </div>
     );

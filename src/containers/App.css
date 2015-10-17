@@ -43,18 +43,3 @@ $pz-title: 2em;
 .multibot {
   flex: 1;
 }
-
-/**** Multiplayer ***/
-
-.multibot_select select {
-  display: block;
-  padding: 12px;
-  background: black;
-  border: 1px solid white;
-  border-radius: 0;
-  margin: 0.3em 0;
-  width: 100%;
-  font-family: $pz-font;
-  font-size: 0.8em;
-  color: white;
-}

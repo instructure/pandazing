@@ -53,7 +53,7 @@ export default class Editor extends React.Component {
           <div>
             <select size={10}
                     value={program && program.name}
-                    onChange={this.props.onChange}>
+                    onChange={this.props.onSelect}>
               { this.props.userAis.map(ai =>
                 <option key={ai.name} value={ai.name}>{ai.name}</option>) }
             </select>

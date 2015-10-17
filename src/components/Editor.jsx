@@ -4,7 +4,7 @@ import Ace from 'react-ace';
 import Styles from './Editor.css';
 
 require('brace/mode/javascript');
-require('brace/theme/twilight');
+require('brace/theme/tomorrow_night_bright');
 
 export default class Editor extends React.Component {
   constructor() {
@@ -33,7 +33,7 @@ export default class Editor extends React.Component {
         </div>
         <Ace
           mode="javascript"
-          theme="twilight"
+          theme="tomorrow_night_bright"
           height="25em"
           width="60em"
           readOnly={disabled}

@@ -38,7 +38,7 @@ export default class AiList extends React.Component {
       ]);
     } else {
       return (
-        <Button onClick={this.props.onLogin}>
+        <Button className={Styles.login} onClick={this.props.onLogin}>
           Log In To Create A Bot
         </Button>
       );

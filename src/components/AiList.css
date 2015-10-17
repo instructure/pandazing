@@ -14,3 +14,12 @@
   padding: 0.2em;
   margin-bottom: 0.8em;
 }
+
+.actions {
+}
+
+.login {
+  padding-left: 40px;
+  background: url('../assets/GitHub-Mark-Light-64px.png') 6px 50% no-repeat;
+  background-size: 24px;
+}

@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { findDOMNode } from 'react-dom';
 import _ from 'underscore';
 
 import UserInfo from '../components/UserInfo.jsx';
@@ -54,19 +53,11 @@ class App extends React.Component {
     ]);
   }
 
-  playMulti() {
+  playMulti(players) {
     this.createGame();
-    var players = [];
-    var getAi = name => {
+    players = players.map(name => {
       var [uid, ai] = name.split('/');
-      return this.props.ais[uid][ai];
-    };
-    [1, 2, 3, 4].forEach(i => {
-      // TODO: redux-ify this and save choices with localStorage
-      var name = findDOMNode(this.refs[`player${i}Ai`]).value;
-      if (name !== 'none') {
-        players.push({source: getAi(name).source });
-      }
+      return { source: this.props.ais[uid][ai].source };
     });
     this.game.run(players);
   }

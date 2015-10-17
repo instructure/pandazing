@@ -15,7 +15,6 @@
   composes: button;
   font-size: 2em;
   width: 100%;
-  margin: 15px 5px 5px 5px;
   background: blue;
   border: 6px solid white;
   border-radius: 4px;

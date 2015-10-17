@@ -1,6 +1,8 @@
 import React from 'react';
 import Ace from 'react-ace';
 
+import Title from './Title.jsx';
+
 import Styles from './Editor.css';
 
 require('brace/mode/javascript');
@@ -17,30 +19,48 @@ export default class Editor extends React.Component {
   }
 
   render() {
-    const { program } = this.props;
+    const { program, uid } = this.props;
     const disabled = !program;
 
     return (
-      <div>
+      <div className={Styles.root}>
+        <Title>MAKE YOUR PANDA BOT</Title>
         <Ace
           mode="javascript"
           theme="tomorrow_night_bright"
-          height="25em"
+          height="22em"
           width="60em"
           readOnly={disabled}
           value={program && program.source}
           onChange={this.props.onChange}
           tabSize={2}
           editorProps={{$blockScrolling: Infinity}} />
-          <div className={Styles.title_box}>
-            <label className={Styles.label}>Bot Name:</label>
+        <div className={Styles.title_box}>
+          <label className={Styles.label}>Bot Name:</label>
 
-            <input type='text'
-              onChange={this.rename}
-              disabled={disabled}
-              className={Styles.input}
-              value={program && program.name} />
+          <input type='text'
+            onChange={this.rename}
+            disabled={disabled}
+            className={Styles.input}
+            value={program && program.name} />
+
+          <button disabled={!uid} onClick={this.props.onCreate}>
+            [+] New Bot
+          </button>
+        </div>
+        <div className={Styles.botlist}>
+          <div>
+            <select size={10}
+                    value={program && program.name}
+                    onChange={this.props.onChange}>
+              { this.props.userAis.map(ai =>
+                <option key={ai.name} value={ai.name}>{ai.name}</option>) }
+            </select>
           </div>
+          <div className={Styles.actions}>
+            <button disabled={!program} onClick={this.props.onPlay}>Test Bot</button>
+          </div>
+        </div>
       </div>
     );
   }

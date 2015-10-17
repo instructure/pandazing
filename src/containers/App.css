@@ -55,21 +55,8 @@ button {
   align-content: flex-start;
 }
 
-.bot,
-.multibot_select {
-  border: 2px solid white;
-  margin: 1px;
-  border-radius: 4px;
-  padding: 20px;
-}
 .multibot {
-  border-width: 2px;
   flex: 1;
-}
-/**** Bot Create/Edit ***/
-
-.bot_stuff {
-  display: flex;
 }
 
 /**** Multiplayer ***/
@@ -95,12 +82,3 @@ button {
   border-radius: 4px;
   box-shadow: none;
 }
-/*.botlist button {
-  border: none;
-  box-shadow: none;
-  font-size: 1em;
-  text-align: right;
-  background: none;
-  width: 100%;
-  padding: 12px0;
-}*/

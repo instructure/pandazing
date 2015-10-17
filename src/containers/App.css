@@ -1,24 +1,98 @@
+/* Colors */
+
+$pz-font: monospace;
+$pz-border: 3px solid white;
+$pz-title: 2em;
+
+body {
+  line-height: 1.1;
+  font-family: $pz-font;
+  font-size: 16px;
+  background: black;
+}
+
+
 .root {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  margin: 1em;
-}
+  justify-content: center;
+  align-content: center;
+  max-width: 1127px;
+  margin: 2em;
 
-.editing > div {
-  margin: 1em;
 }
+.title_box {
+  margin: 5px 0;
+}
+.button {
 
+}
+.actions {
+  text-align: right;
+  margin: 5px 0;
+}
 .editing {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+
+}
+.editing > div {
+  margin: 0 5px;
 }
 
-.sidebar {
-  margin: 1em;
+.botsetup select {
+  padding: 5px 0;
+  background: black;
+  border: 1px solid white;
+  border-radius: 0;
+  margin: 0.7em 0;
+  width: 100%;
+  font-family: $pz-font;
+  font-size: 0.8em;
+  color: white;
+}
+button {
+  background: black;
+  border: 2px solid #aaa;
+  border-top: none;
+  border-left: none;
+  box-shadow: inset 2px 2px 0 #fff;
+  color: #fff;
+  padding: 0.5em 0.8em;
+  font-family: $pz-font;
+  font-size: 1em;
+  text-transform: uppercase;
+  cursor: pointer;
 }
 
-.sidebar img {
-  padding-right: 1em;
+
+/****** BotSetup ********/
+
+.botsetup {
+
+
+
 }
+.currentbot {
+  flex: 1 77%;
+}
+.currentbot select {
+  padding: $pz-pad;
+  background: black;
+  border: 1px solid white;
+  border-radius: 0;
+  margin: 0.7em 0;
+  width: 100%;
+  font-family: $pz-font;
+  font-size: 0.8em;
+  color: white;
+}
+.currentbot button {
+  border: none;
+  box-shadow: none;
+  font-size: 1em;
+  text-align: right;
+  background: none;
+  width: 100%;
+  padding: $pz-pad 0;
+}
+
+

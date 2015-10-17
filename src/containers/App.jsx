@@ -91,11 +91,50 @@ class App extends React.Component {
         <div className={Styles.root}>
           <div className={Styles.main}>
             <GameViz game={this.state.game}/>
+              <div className={Styles.account}>
+                <UserInfo
+                  onLogin={() => dispatch(loginUser())}
+                  onLogout={() => dispatch(logoutUser())}
+                  user={this.props.user}/>
+              </div>
             <div className={Styles.editing}>
               <div>
-                <button disabled={!user} onClick={() =>
+                <Editor program={editingAi}
+                  onRename={(newName) => dispatch(renameAi(user.uid, editingAi.name, newName))}
+                  onChange={(newSource) => dispatch(editAi(user.uid, editingAi.name, newSource))} />
+                  <div className={Styles.actions}>
+                    <button className={Styles.button} disabled={!editingAi} onClick={this.playSolo}>Test Bot</button>
+                  </div>
+              </div>
+
+              <div className={Styles.botsetup}>
+                <p>Choose Bots:</p>
+                <select ref='player1Ai'>
+                  <option value='none'>None</option>
+                  { allAis }
+                </select>
+
+                <select ref='player2Ai'>
+                  <option value='none'>None</option>
+                  { allAis }
+                </select>
+
+                <select ref='player3Ai'>
+                  <option value='none'>None</option>
+                  { allAis }
+                </select>
+
+                <select ref='player4Ai'>
+                  <option value='none'>None</option>
+                  { allAis }
+                </select>
+
+                <button className="button--battle" onClick={this.playMulti}>Battle!</button>
+              </div>
+              <div className={Styles.currentbot}>
+                <button className="button--link" disabled={!user} onClick={() =>
                     dispatch(newAi(user.uid, user.handle, 'Untitled', Game.aiTemplate()))}>
-                  New Bot
+                  [+] New Bot
                 </button>
                 <br/>
                 <select size={10}
@@ -104,44 +143,9 @@ class App extends React.Component {
                   { ais.userAis.map(ai => <option key={ai.name} value={ai.name}>{ai.name}</option>) }
                 </select>
               </div>
-              <div>
-                <Editor program={editingAi}
-                  onRename={(newName) => dispatch(renameAi(user.uid, editingAi.name, newName))}
-                  onChange={(newSource) => dispatch(editAi(user.uid, editingAi.name, newSource))} />
-                <button disabled={!editingAi} onClick={this.playSolo}>Play Debug Game</button>
-              </div>
-              <div>
-                <p>Play Against Other Bots</p>
-                1: <select ref='player1Ai'>
-                  <option value='none'>None</option>
-                  { allAis }
-                </select>
-                <br/>
-                2: <select ref='player2Ai'>
-                  <option value='none'>None</option>
-                  { allAis }
-                </select>
-                <br/>
-                3: <select ref='player3Ai'>
-                  <option value='none'>None</option>
-                  { allAis }
-                </select>
-                <br/>
-                4: <select ref='player4Ai'>
-                  <option value='none'>None</option>
-                  { allAis }
-                </select>
-                <br/>
-                <button onClick={this.playMulti}>Battle</button>
-              </div>
             </div>
           </div>
-          <div className={Styles.sidebar}>
-            <UserInfo
-              onLogin={() => dispatch(loginUser())}
-              onLogout={() => dispatch(logoutUser())}
-              user={this.props.user}/>
-          </div>
+
         </div>
       );
     }

@@ -22,15 +22,6 @@ export default class Editor extends React.Component {
 
     return (
       <div>
-        <div className={Styles.title_box}>
-        <label className={Styles.label}>Bot Name:</label>
-
-        <input type='text'
-          onChange={this.rename}
-          disabled={disabled}
-          className={Styles.input}
-          value={program && program.name} />
-        </div>
         <Ace
           mode="javascript"
           theme="twilight"
@@ -41,7 +32,15 @@ export default class Editor extends React.Component {
           onChange={this.props.onChange}
           tabSize={2}
           editorProps={{$blockScrolling: Infinity}} />
+          <div className={Styles.title_box}>
+            <label className={Styles.label}>Bot Name:</label>
 
+            <input type='text'
+              onChange={this.rename}
+              disabled={disabled}
+              className={Styles.input}
+              value={program && program.name} />
+          </div>
       </div>
     );
   }

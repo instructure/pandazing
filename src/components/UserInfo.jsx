@@ -7,7 +7,7 @@ export default class UserInfo extends React.Component {
       <div className={Styles.userinfo}>
       {this.props.user &&
         <div>
-          {this.props.user.handle}
+          Hello, {this.props.user.handle}
         </div>
       }
 

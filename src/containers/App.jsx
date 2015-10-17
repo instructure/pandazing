@@ -89,63 +89,83 @@ class App extends React.Component {
       );
       return (
         <div className={Styles.root}>
-          <div className={Styles.main}>
+          <div>
             <GameViz game={this.state.game}/>
-              <div className={Styles.account}>
-                <UserInfo
-                  onLogin={() => dispatch(loginUser())}
-                  onLogout={() => dispatch(logoutUser())}
-                  user={this.props.user}/>
-              </div>
-            <div className={Styles.editing}>
-              <div>
-                <Editor program={editingAi}
-                  onRename={(newName) => dispatch(renameAi(user.uid, editingAi.name, newName))}
-                  onChange={(newSource) => dispatch(editAi(user.uid, editingAi.name, newSource))} />
-                  <div className={Styles.actions}>
-                    <button className={Styles.button} disabled={!editingAi} onClick={this.playSolo}>Test Bot</button>
+            <div className={Styles.main}>
+
+                <div className={Styles.border}>
+                <div className={Styles.bot}>
+                  <h2>MAKE YOUR PANDA BOT</h2>
+
+                  <div className={Styles.bot_stuff}>
+                    <div className={Styles.botedit}>
+                      <Editor program={editingAi}
+                        onRename={(newName) => dispatch(renameAi(user.uid, editingAi.name, newName))}
+                        onChange={(newSource) => dispatch(editAi(user.uid, editingAi.name, newSource))} />
+                    </div>
+
+                    <div className={Styles.botlist}>
+                      <button className="button--link" disabled={!user} onClick={() =>
+                          dispatch(newAi(user.uid, user.handle, 'Untitled', Game.aiTemplate()))}>
+                        [+] New Bot
+                      </button>
+                      <div>
+                        <select size={10}
+                                value={ais.editingAi && ais.editingAi}
+                                onChange={(event) => dispatch(selectEditingAi(event.target.value))}>
+                          { ais.userAis.map(ai => <option key={ai.name} value={ai.name}>{ai.name}</option>) }
+                        </select>
+                      </div>
+                      <div className={Styles.actions}>
+                        <button  disabled={!editingAi} onClick={this.playSolo}>Test Bot</button>
+                      </div>
+                    </div>
                   </div>
-              </div>
 
-              <div className={Styles.botsetup}>
-                <p>Choose Bots:</p>
-                <select ref='player1Ai'>
-                  <option value='none'>None</option>
-                  { allAis }
-                </select>
+                </div>
+                </div>
 
-                <select ref='player2Ai'>
-                  <option value='none'>None</option>
-                  { allAis }
-                </select>
 
-                <select ref='player3Ai'>
-                  <option value='none'>None</option>
-                  { allAis }
-                </select>
 
-                <select ref='player4Ai'>
-                  <option value='none'>None</option>
-                  { allAis }
-                </select>
+                <div className={Styles.multibot}>
+                  <div className={Styles.border}>
+                  <div className={Styles.multibot_select}>
+                    <h2>BATTLE SETUP</h2>
 
-                <button className="button--battle" onClick={this.playMulti}>Battle!</button>
-              </div>
-              <div className={Styles.currentbot}>
-                <button className="button--link" disabled={!user} onClick={() =>
-                    dispatch(newAi(user.uid, user.handle, 'Untitled', Game.aiTemplate()))}>
-                  [+] New Bot
-                </button>
-                <br/>
-                <select size={10}
-                        value={ais.editingAi && ais.editingAi}
-                        onChange={(event) => dispatch(selectEditingAi(event.target.value))}>
-                  { ais.userAis.map(ai => <option key={ai.name} value={ai.name}>{ai.name}</option>) }
-                </select>
-              </div>
+                    <div>
+                      <select ref='player1Ai'>
+                        <option value='none'>None</option>
+                        { allAis }
+                      </select>
+                      <br/>
+                      <select ref='player2Ai'>
+                        <option value='none'>None</option>
+                        { allAis }
+                      </select>
+                      <br/>
+                      <select ref='player3Ai'>
+                        <option value='none'>None</option>
+                        { allAis }
+                      </select>
+                      <br/>
+                      <select ref='player4Ai'>
+                        <option value='none'>None</option>
+                        { allAis }
+                      </select>
+                    </div>
+                  </div>
+                  </div>
+                  <button className={Styles.button_battle} onClick={this.playMulti}>Battle!</button>
+                </div>
+
+            </div>
+            <div className={Styles.border}>
+            <UserInfo
+                onLogin={() => dispatch(loginUser())}
+                onLogout={() => dispatch(logoutUser())}
+                user={this.props.user}/>
             </div>
           </div>
-
         </div>
       );
     }

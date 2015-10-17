@@ -3,14 +3,14 @@
 }
 
 .label {
-  font-size: 1.4em;
+
 }
 .input {
   background-color: black;
   color: white;
   font-family: $pz-font;
-  border: none;
-  border-bottom: 1px solid #fff;
-  padding: 6px;
-  font-size: 1.4em;
+  border: 1px solid #fff;
+  font-size: 1em;
+  margin-left: 5px;
+  padding: 3px;
 }

@@ -1,8 +1,10 @@
 import React from 'react';
 import Ace from 'react-ace';
 
+import Styles from './Editor.css';
+
 require('brace/mode/javascript');
-require('brace/theme/chrome');
+require('brace/theme/twilight');
 
 export default class Editor extends React.Component {
   constructor() {
@@ -20,13 +22,18 @@ export default class Editor extends React.Component {
 
     return (
       <div>
-        Bot Name: <input type='text'
+        <div className={Styles.title_box}>
+        <label className={Styles.label}>Bot Name:</label>
+
+        <input type='text'
           onChange={this.rename}
           disabled={disabled}
+          className={Styles.input}
           value={program && program.name} />
+        </div>
         <Ace
           mode="javascript"
-          theme="chrome"
+          theme="twilight"
           height="25em"
           width="60em"
           readOnly={disabled}
@@ -34,6 +41,7 @@ export default class Editor extends React.Component {
           onChange={this.props.onChange}
           tabSize={2}
           editorProps={{$blockScrolling: Infinity}} />
+
       </div>
     );
   }

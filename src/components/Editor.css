@@ -1,0 +1,16 @@
+.title_box {
+  margin: 5px 0;
+}
+
+.label {
+  font-size: 1.4em;
+}
+.input {
+  background-color: black;
+  color: white;
+  font-family: $pz-font;
+  border: none;
+  border-bottom: 1px solid #fff;
+  padding: 6px;
+  font-size: 1.4em;
+}

@@ -8,6 +8,6 @@ RUN mkdir -p $APP_HOME && chown -R docker:docker $APP_HOME
 WORKDIR $APP_HOME
 
 USER docker
-EXPOSE 8080
+EXPOSE 9573
 
 CMD ["npm", "run", "start"]

@@ -2,5 +2,7 @@ app:
   build: .
   volumes:
     - .:/usr/src/app
+  ports:
+    - 9573:9573
   environment:
     VIRTUAL_HOST: pandazing.docker

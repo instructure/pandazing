@@ -5,4 +5,4 @@ bot to battle other javascript bots in the panda arena.
 
 Play it now:
 
-https://inst-tanks.firebaseapp.com
+https://pandazing.firebaseapp.com

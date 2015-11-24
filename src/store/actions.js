@@ -5,7 +5,7 @@ export const SELECT_EDITING_AI = 'SELECT_EDITING_AI';
 export const EDIT_AI = 'EDIT_AI';
 
 import Firebase from 'firebase';
-const firebase = new Firebase('https://inst-tanks.firebaseio.com');
+const firebase = new Firebase('https://pandazing.firebaseio.com');
 
 // used internally when the user object is updated in firebase
 function userUpdate(user) {

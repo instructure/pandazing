@@ -1,9 +1,23 @@
 {
-  "firebase": "inst-tanks",
+  "firebase": "pandazing",
   "public": "dist",
   "ignore": [
     "firebase.json",
     "**/.*",
     "**/node_modules/**"
-  ]
+  ],
+  "rules": {
+    "users": {
+      "$uid": {
+        ".write": "auth !== null && auth.uid === $uid",
+        ".read": "auth !== null  && auth.uid === $uid"
+      }
+    },
+    "ais": {
+      ".read": "auth !== null",
+      "$uid": {
+        ".write": "auth !== null && auth.uid === $uid"
+      }
+    }
+  }
 }
